@@ -18,10 +18,8 @@ Weinxin_api_.net
 ***
 
 ### 使用演示
-* json.net
-
-***
-```ObjectiveC 
+处理消息：
+```C#
     var m = ReceiveMessage.ParseFromContext();
     
     //文本响应
@@ -34,7 +32,7 @@ Weinxin_api_.net
     {
         Description = "desc",
         Title = "title",
-        MusicUrl = "http://play.baidu.com/?__m=mboxCtrl.playSong&__a=331525&__o=/song/331525||playBtn&fr=ps||www.baidu.com#loaded",
+        MusicUrl = "http://play.baidu.com/",
         HQMusicUrl = "hq url"
     };*/
     
@@ -70,3 +68,32 @@ Weinxin_api_.net
     };
     r.Response();    
 ``` 
+
+获取access_token
+```C#
+    var c = Credential.Create();
+    string 获取access_token=c.AccessToken;
+```
+添加菜单：
+```C#
+    var h = MenuHelper.Create();
+    var json =
+                @"{'button':[{'type':'click','name':'今日歌曲','key':'V1001_TODAY_MUSIC','sub_button':[]},
+                {'type':'click','name':'歌手简介','key':'V1001_TODAY_SINGER','sub_button':[]},
+                {'name':'菜单','sub_button':[{'type':'click','name':'hello word','key':'V1001_HELLO_WORLD','sub_button':[]},
+                {'type':'click','name':'赞一下我们','key':'V1001_GOOD','sub_button':[]}]}]}"; 
+    var menu = Menu.FromJson(json);
+    var r = h.CreateMenu(menu);
+```
+获取菜单：
+```C#
+    var h = MenuHelper.Create();
+    h.AccessToken = Credential.Create().AccessToken;
+    var menu = h.QueryMenu();
+```
+删除菜单：
+```C#
+    var h = MenuHelper.Create();
+    var r = h.DeleteMenu();
+```
+***
