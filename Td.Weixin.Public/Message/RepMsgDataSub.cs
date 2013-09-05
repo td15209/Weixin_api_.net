@@ -21,6 +21,16 @@ namespace Td.Weixin.Public.Message
 
         [Output]
         public string Content { get; set; }
+
+
+        public static implicit operator TextMsgData(string s)
+        {
+            var ret = new TextMsgData
+            {
+                Content = s
+            };
+            return ret;
+        }
     }
 
     /// <summary>
@@ -60,7 +70,11 @@ namespace Td.Weixin.Public.Message
 
         public const string NodeName = "Articles";
 
-        public List<NewsItem> Items { get; private set; }
+        /// <summary>
+        /// 具体条目列表。
+        /// 相当于每一个条目就是条新闻
+        /// </summary>
+        public List<NewsItem> Items { get; set; }
 
         public int ArticleCount { get { return Items.Count; } }
 

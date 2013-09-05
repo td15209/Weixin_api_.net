@@ -27,40 +27,9 @@ namespace Td.Weixin.Public.Message
         [Output]
         public long MsgId { get; set; }
 
-        /// <summary>
-        /// 提交的签名
-        /// </summary>
-        public string signature { get; set; }
-
-        public string timestamp { get; set; }
-
-        /// <summary>
-        /// 随机数
-        /// </summary>
-        public string nonce { get; set; }
-
-        /// <summary>
-        /// 随机字符串。若确认此次GET请求来自微信服务器，请原样返回echostr参数内容，则接入生效，否则接入失败。
-        /// </summary>
-        public string echostr { get; set; }
 
         #region 静态方法
 
-        private static void ParseMetadata(ReceiveMessage msg)
-        {
-            if (msg == null)
-                return;
-
-            var ps = msg.GetType().GetCustomAttributes(typeof(MusicMsgData), true)
-                .Select(p => p as PropertyInfo);
-            foreach (var p in ps)
-            {
-                var context = HttpContext.Current;
-                if (context == null)
-                    return;
-                p.SetValue(msg, context.Request[p.Name], null);
-            }
-        }
 
         /// <summary>
         /// 从xml文件解析消息值(不包含签名信息)
@@ -83,7 +52,6 @@ namespace Td.Weixin.Public.Message
             var request = HttpContext.Current.Request;
             var sr = new StreamReader(request.InputStream);
             var msg = Parse(sr.ReadToEnd());
-            ParseMetadata(msg);
 
             return msg;
         }
@@ -115,30 +83,20 @@ namespace Td.Weixin.Public.Message
         #endregion
 
         /// <summary>
-        /// 验证签名
+        /// 从接收到的消息中获取信息以填充到响应消息中。
         /// </summary>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        public bool Check(string token)
-        {
-            var vs = new[] { timestamp, nonce, token }.OrderBy(s => s);
-            var str = string.Join("", vs);
-            var copu = System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(str, "SHA1");
-            return signature == copu;
-        }
-
+        /// <param name="msg"></param>
         private void FillRepMsg(ResponseMessage msg)
         {
             msg.FromUserName = ToUserName;
             msg.ToUserName = FromUserName;
-            msg.echostr = echostr;
         }
 
         /// <summary>
         /// 获取文本响应消息
         /// </summary>
         /// <returns></returns>
-        public ResponseMessage GetTextResponse()
+        public RepTextMessage GetTextResponse()
         {
             var ret = new RepTextMessage();
             FillRepMsg(ret);
@@ -148,7 +106,7 @@ namespace Td.Weixin.Public.Message
         /// <summary>
         /// 获取音乐响应消息
         /// </summary>
-        public ResponseMessage GetMusicResponse()
+        public RepMusicMessage GetMusicResponse()
         {
             var ret = new RepMusicMessage();
             FillRepMsg(ret);
@@ -159,7 +117,7 @@ namespace Td.Weixin.Public.Message
         /// 获取图文响应消息
         /// </summary>
         /// <returns></returns>
-        public ResponseMessage GetNewsResponse()
+        public RepNewsMessage GetNewsResponse()
         {
             var ret = new RepNewsMessage();
             FillRepMsg(ret);

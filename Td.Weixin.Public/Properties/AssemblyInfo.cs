@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle(".Net for 微信公共平台接口")]
 [assembly: AssemblyDescription(".Net 环境服务器对微信公共平台接口处理的封装")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("techdong")]
+[assembly: AssemblyCompany("techdong[techdong@hotmail.com]")]
 [assembly: AssemblyProduct(".Net for 微信公共平台接口")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2013")]
+[assembly: AssemblyCopyright("Copyright © techdong 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -17,12 +17,10 @@ namespace Td.Weixin.Public.Message
     {
         public ResponseMessage()
         {
-            CreateTime = (int)(DateTime.Now.Ticks / 1000 * 10000);
+            CreateTime = (int)(DateTime.Now - DateTime.Parse("1970-1-1")).TotalSeconds;
         }
 
         public RepMsgData Data { get; set; }
-
-        public string echostr { get; set; }
 
         public override string InnerToXmlText()
         {
@@ -41,7 +39,7 @@ namespace Td.Weixin.Public.Message
         public void Response(bool end = true)
         {
             var response = HttpContext.Current.Response;
-            if (response != null && response.IsClientConnected)
+            if (response.IsClientConnected)
             {
                 response.Write(ToXmlText());
                 if (end)

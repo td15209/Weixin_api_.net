@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\Credential.cs" />
+    <Compile Include="Common\EntrySign.cs" />
     <Compile Include="Common\HttpHelper.cs" />
     <Compile Include="Common\MenuHelper.cs" />
     <Compile Include="Message\Message.cs" />
