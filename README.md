@@ -18,7 +18,7 @@ Weinxin_api_.net
 ***
 
 ### 使用演示
-处理消息：
+处理消息：(v1.1 增加了新的消息处理方式，请参见：https://github.com/chendong152/Weinxin_api_.net/wiki/v1.1-%E6%96%B0%E7%89%88%E6%B6%88%E6%81%AF%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F)
 ```C#
     var m = ReceiveMessage.ParseFromContext();
     
