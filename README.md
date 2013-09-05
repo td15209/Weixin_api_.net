@@ -72,7 +72,7 @@ Weinxin_api_.net
 获取access_token
 ```C#
     var c = Credential.Create();
-    string 获取access_token=c.AccessToken;
+    string access_token=c.AccessToken;
 ```
 添加菜单：
 ```C#
