@@ -48,6 +48,7 @@
     <Compile Include="Common\EntrySign.cs" />
     <Compile Include="Common\HttpHelper.cs" />
     <Compile Include="Common\MenuHelper.cs" />
+    <Compile Include="Message\IMessageHandler.cs" />
     <Compile Include="Message\Message.cs" />
     <Compile Include="Message\MessageHelper.cs" />
     <Compile Include="Message\ReceiveMessageSub.cs" />

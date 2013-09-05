@@ -5,6 +5,8 @@
  * 
 *******************************/
 
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Dynamic;
 using System.IO;
@@ -32,7 +34,7 @@ namespace Td.Weixin.Public.Message
 
 
         /// <summary>
-        /// 从xml文件解析消息值(不包含签名信息)
+        /// 从xml文件解析消息。
         /// </summary>
         /// <param name="text"></param>
         /// <returns></returns>
@@ -40,6 +42,7 @@ namespace Td.Weixin.Public.Message
         {
             var ret = ObtainByType(text);
             ret.ParseFrom(text);
+
             return ret;
         }
 
@@ -80,6 +83,19 @@ namespace Td.Weixin.Public.Message
             }
             return null;
         }
+
+
+        private static IMessageHandler _messageHandler;
+
+        /// <summary>
+        /// 注册消息处理程序。当收到消息是后执行相应的方法。
+        /// </summary>
+        /// <param name="handler"></param>
+        public static void ResisterHandler(IMessageHandler handler)
+        {
+            _messageHandler = handler;
+        }
+
         #endregion
 
         /// <summary>
@@ -123,5 +139,30 @@ namespace Td.Weixin.Public.Message
             FillRepMsg(ret);
             return ret;
         }
+
+        /// <summary>
+        /// （调用已经定义的消息处理程序）处理消息
+        /// <para>注意，请不要在接口IMessageHandler的实现方法内再次调用，这样可能会导致死循环。</para>
+        /// </summary>
+        /// <returns></returns>
+        public ResponseMessage Process()
+        {
+            //如果没有定义事件处理程序则返回
+            if (_messageHandler == null)
+                return null;
+
+            var dic = new Dictionary<MessageType, Func<ReceiveMessage, ResponseMessage>>
+            {
+                {MessageType.Text, rm => _messageHandler.OnTextMessage(rm as RecTextMessage)},
+                {MessageType.Image, rm => _messageHandler.OnImageMessage(rm as RecImageMessage)},
+                {MessageType.Link, rm => _messageHandler.OnLinkMessage((RecLinkMessage) rm)},
+                {MessageType.Location, rm => _messageHandler.OnLocationMessage((RecLocationMessage) rm)},
+                {MessageType.Event, rm => _messageHandler.OnEventMessage((RecEventMessage) rm)}
+            };
+            var ret = dic[MsgType](this);
+
+            return ret;
+        }
+
     }
 }
