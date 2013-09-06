@@ -5,6 +5,7 @@
  * 
 *******************************/
 
+using System.Collections.Generic;
 using System.Configuration;
 using System.Threading;
 using System.Web.Configuration;
@@ -15,6 +16,11 @@ namespace Td.Weixin.Public.Common
     {
         public const string Url = "https://api.weixin.qq.com/cgi-bin/token";
         private static string _accessToken;
+
+        /// <summary>
+        /// 多access_token缓存（根据appid），满足一个服务器服务于多个微信公号的需求。
+        /// </summary>
+        private readonly static Dictionary<string, string> MultiTokenCache = new Dictionary<string, string>();
 
         /// <summary>
         /// 获取缓存的（最后一次获取的）AccessToken。
@@ -56,7 +62,7 @@ namespace Td.Weixin.Public.Common
         {
             get
             {
-                if (_accessToken == null)
+                if (!MultiTokenCache.ContainsKey(Appid) || string.IsNullOrEmpty(MultiTokenCache[Appid]))
                 {
                     var helper = GetHelper();
                     var ret = helper.Get<Result>(new FormData
@@ -65,8 +71,12 @@ namespace Td.Weixin.Public.Common
                        { "appid",Appid},
                        { "secret",Secret},
                     });
+
                     _accessToken = ret.access_token;
-                    new Timer(state => { _accessToken = null; }, null, ret.expires_in * 1000, Timeout.Infinite);
+                    MultiTokenCache[Appid] = _accessToken;//缓存
+
+                    if(ret.IsSuccess)
+                        new Timer(state => { _accessToken = null; }, null, (ret.expires_in - 3)/*避免时间误差*/ * 1000, Timeout.Infinite);
                 }
 
                 return _accessToken;
