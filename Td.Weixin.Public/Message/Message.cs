@@ -56,6 +56,11 @@ namespace Td.Weixin.Public.Message
         /// </summary>
         public string RootName { get; set; }
 
+        public override string ToString()
+        {
+            return ToXmlText();
+        }
+
         /// <summary>
         /// 转换为最终xml文本
         /// </summary>

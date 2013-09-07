@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Configuration;
@@ -15,8 +16,7 @@ namespace Td.Weixin.Public.Common
             if (es == null)
                 return;
 
-            var ps = es.GetType().GetCustomAttributes(false)
-                .Select(p => p as PropertyInfo);
+            var ps = es.GetType().GetProperties();
             foreach (var p in ps)
             {
                 var context = HttpContext.Current;
@@ -28,9 +28,19 @@ namespace Td.Weixin.Public.Common
 
         /// <summary>
         /// 检查当前请求是否是接入验证请求。
-        /// <para>如果为true，则表示需要验证，此时请执行 EntrySign.ParseFromContext()获取实例然后执行 (实例).Check()方法以检测签名是否正确。
-        /// 如果正确，请执行(实例).Response()方法。</para>
+        /// 如果正确，请执行(实例).Response()方法。
         /// <para>如果为false，则表示已经成功接入，本次请求为消息处理请求。</para>
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsEntryCheck()
+        {
+            return "GET".Equals(HttpContext.Current.Request.HttpMethod);
+        }
+
+        /// <summary>
+        /// 检查当前请求是否带有签名验证，一般情况都为true（表示需要验证。当然如果不考虑安全，也可以不验证）。
+        /// <para>如果为true，则表示需要验证，此时请执行 EntrySign.ParseFromContext()获取实例然后执行 (实例).Check()方法以检测签名是否正确。
+        /// </para>
         /// </summary>
         /// <returns></returns>
         public static bool IsSignCheckRequest()
@@ -90,7 +100,7 @@ namespace Td.Weixin.Public.Common
             var vs = new[] { timestamp, nonce, token }.OrderBy(s => s);
             var str = string.Join("", vs);
             var copu = System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(str, "SHA1");
-            return signature == copu;
+            return copu.Equals(signature,StringComparison.CurrentCultureIgnoreCase);
         }
 
         /// <summary>
