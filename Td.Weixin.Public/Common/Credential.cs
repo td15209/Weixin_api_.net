@@ -5,6 +5,7 @@
  * 
 *******************************/
 
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Threading;
@@ -75,8 +76,14 @@ namespace Td.Weixin.Public.Common
                     _accessToken = ret.access_token;
                     MultiTokenCache[Appid] = _accessToken;//缓存
 
-                    if(ret.IsSuccess)
-                        new Timer(state => { _accessToken = null; }, null, (ret.expires_in - 3)/*避免时间误差*/ * 1000, Timeout.Infinite);
+                    if (ret.IsSuccess)
+                    {
+                        var autoEvent = new AutoResetEvent(false);
+                        var timer = new Timer(state => { _accessToken = null;
+                                                           autoEvent.Set();
+                        }, autoEvent, (ret.expires_in - 3)/*避免时间误差*/ * 1000, Timeout.Infinite);
+                        timer.Dispose(autoEvent);
+                    }
                 }
 
                 return _accessToken;
