@@ -161,6 +161,9 @@ namespace Td.Weixin.Public.Message
             };
             var ret = dic[MsgType](this);
 
+            //处理消息后
+            _messageHandler.OnAfterMessage(this,ret);
+
             return ret;
         }
 

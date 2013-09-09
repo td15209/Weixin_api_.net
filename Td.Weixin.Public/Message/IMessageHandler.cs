@@ -40,8 +40,23 @@ namespace Td.Weixin.Public.Message
         /// <summary>
         /// 收到事件消息时执行
         /// </summary>
-        /// <param name="msg"></param>
+        /// <param name="msg"></param> 
         /// <returns></returns>
         ResponseMessage OnEventMessage(RecEventMessage msg);
+
+/* 
+        /// <summary>
+        /// 处理消息前执行。可用来重组收到消息等
+        /// </summary>
+        /// <param name="msg"></param>
+        void OnBeforeMessage(ReceiveMessage msg);
+*/
+
+        /// <summary>
+        /// 处理完消息后执行。可用来处理日志等
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <param name="repMsg"></param>
+        void OnAfterMessage(ReceiveMessage msg, ResponseMessage repMsg);
     }
 }

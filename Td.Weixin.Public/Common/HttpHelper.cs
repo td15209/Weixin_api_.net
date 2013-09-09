@@ -34,13 +34,8 @@ namespace Td.Weixin.Public.Common
         /// <returns></returns>
         public T Get<T>(FormData formData)
         {
-            var request = WebRequest.Create(string.Format("{0}?{1}", Url, formData.Format()));
-            request.Method = "GET";
-            T ret;
-            using (var rep = request.GetResponse())
-            {
-                ret = ReadFromResponse<T>(rep);
-            }
+            var url = string.Format("{0}?{1}", Url, formData.Format());
+            var ret = ReadFromResponse<T>(GetStream(url));
             return ret;
         }
 
@@ -77,6 +72,28 @@ namespace Td.Weixin.Public.Common
             return ret;
         }
 
+        private static T ReadFromResponse<T>(Stream stream)
+        {
+            T ret = default(T);
+            if (stream != null)
+            {
+                var sr = new StreamReader(stream);
+                ret = JsonConvert.DeserializeObject<T>(sr.ReadToEnd());
+            }
+            return ret;
+        }
+
+        /// <summary>
+        /// 以GET方式获取指定url的响应流
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public static Stream GetStream(string url)
+        {
+            var request = WebRequest.Create(url);
+            request.Method = "GET";
+            return request.GetResponse().GetResponseStream();
+        }
     }
 
     public class FormData : Dictionary<string, object>
