@@ -1,0 +1,25 @@
+﻿@using Td.Weixin.Public.Common
+@using Td.Weixin.Public.Message
+
+
+@{
+    Layout = null;
+}
+
+
+@{
+    var sign=EntrySign.ParseFromContext();
+    if (/*sign.Check()*/true)
+    {
+        if (EntrySign.IsEntryCheck())
+        {
+            sign.Response();
+        }
+        else
+        {
+            var msg = ReceiveMessage.ParseFromContext();
+            var rep=msg.Process();
+            rep.Response();
+        }
+    }
+}

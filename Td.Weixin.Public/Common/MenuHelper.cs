@@ -98,7 +98,8 @@ namespace Td.Weixin.Public.Common
 
         public override string ToString()
         {
-            return JsonConvert.SerializeObject(this);
+            var settings = new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore};
+            return JsonConvert.SerializeObject(this, settings);
         }
     }
 
@@ -129,6 +130,12 @@ namespace Td.Weixin.Public.Common
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
+
+        /// <summary>
+        /// view button 的url地址
+        /// </summary>
+        [JsonProperty(PropertyName = "url")]
+        public string Url { get; set; }
 
         [JsonProperty(PropertyName = "sub_button")]
         public List<MenuItem> Items { get; set; }
