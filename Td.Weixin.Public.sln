@@ -5,27 +5,24 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Td.Weixin.Public", "Td.Weix
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{7FF3B551-E288-4DA4-8D1E-E5895038EE5A}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WeixinWebTest", "http://localhost:53146", "{E49BABB9-A6F8-41B9-8BAA-C91330A7F5E8}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WeixinWebTest", "WeixinWebTest\", "{C7964265-D7C7-4A57-989D-5A28A2FA7353}"
 	ProjectSection(WebsiteProperties) = preProject
-		UseIISExpress = "true"
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
-		ProjectReferences = "{b0c87f3b-7c5d-480f-980e-6ccb1098eed0}|Td.Weixin.Public.dll;"
-		Debug.AspNetCompiler.VirtualPath = "/localhost_53146"
-		Debug.AspNetCompiler.PhysicalPath = "d:\我的文档\Visual Studio 2012\WebSites\WeixinWebTest\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_53146\"
+		Debug.AspNetCompiler.VirtualPath = "/WeixinWebTest"
+		Debug.AspNetCompiler.PhysicalPath = "WeixinWebTest\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\WeixinWebTest\"
 		Debug.AspNetCompiler.Updateable = "true"
 		Debug.AspNetCompiler.ForceOverwrite = "true"
 		Debug.AspNetCompiler.FixedNames = "false"
 		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/localhost_53146"
-		Release.AspNetCompiler.PhysicalPath = "d:\我的文档\Visual Studio 2012\WebSites\WeixinWebTest\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_53146\"
+		Release.AspNetCompiler.VirtualPath = "/WeixinWebTest"
+		Release.AspNetCompiler.PhysicalPath = "WeixinWebTest\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\WeixinWebTest\"
 		Release.AspNetCompiler.Updateable = "true"
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		SlnRelativePath = "d:\我的文档\Visual Studio 2012\WebSites\WeixinWebTest\"
-		DefaultWebSiteLanguage = "Visual C#"
+		VWDPort = "58615"
 	EndProjectSection
 EndProject
 Global
@@ -42,10 +39,10 @@ Global
 		{7FF3B551-E288-4DA4-8D1E-E5895038EE5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7FF3B551-E288-4DA4-8D1E-E5895038EE5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7FF3B551-E288-4DA4-8D1E-E5895038EE5A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E49BABB9-A6F8-41B9-8BAA-C91330A7F5E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E49BABB9-A6F8-41B9-8BAA-C91330A7F5E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E49BABB9-A6F8-41B9-8BAA-C91330A7F5E8}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{E49BABB9-A6F8-41B9-8BAA-C91330A7F5E8}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{C7964265-D7C7-4A57-989D-5A28A2FA7353}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7964265-D7C7-4A57-989D-5A28A2FA7353}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7964265-D7C7-4A57-989D-5A28A2FA7353}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7964265-D7C7-4A57-989D-5A28A2FA7353}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
