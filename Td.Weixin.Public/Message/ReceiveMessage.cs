@@ -112,10 +112,11 @@ namespace Td.Weixin.Public.Message
         /// 获取文本响应消息
         /// </summary>
         /// <returns></returns>
-        public RepTextMessage GetTextResponse()
+        public RepTextMessage GetTextResponse(string text = null)
         {
             var ret = new RepTextMessage();
             FillRepMsg(ret);
+            ret.Data = (TextMsgData)text;
             return ret;
         }
 
@@ -133,10 +134,16 @@ namespace Td.Weixin.Public.Message
         /// 获取图文响应消息
         /// </summary>
         /// <returns></returns>
-        public RepNewsMessage GetNewsResponse()
+        public RepNewsMessage GetNewsResponse(IEnumerable<NewsItem> data = null)
         {
             var ret = new RepNewsMessage();
             FillRepMsg(ret);
+            if (data != null)
+            {
+                var msgData = new NewsMsgData();
+                msgData.Items.AddRange(data);
+                ret.Data = msgData;
+            }
             return ret;
         }
 
@@ -162,7 +169,7 @@ namespace Td.Weixin.Public.Message
             var ret = dic[MsgType](this);
 
             //处理消息后
-            _messageHandler.OnAfterMessage(this,ret);
+            _messageHandler.OnAfterMessage(this, ret);
 
             return ret;
         }
