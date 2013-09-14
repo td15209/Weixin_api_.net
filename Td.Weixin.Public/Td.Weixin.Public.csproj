@@ -48,8 +48,9 @@
     <Compile Include="Common\EntrySign.cs" />
     <Compile Include="Common\HttpHelper.cs" />
     <Compile Include="Common\MenuHelper.cs" />
+    <Compile Include="Common\SellerContext.cs" />
+    <Compile Include="Common\SellerObtainer.cs" />
     <Compile Include="Common\UserContext.cs" />
-    <Compile Include="Common\UserContextData.cs" />
     <Compile Include="Message\IMessageHandler.cs" />
     <Compile Include="Message\Message.cs" />
     <Compile Include="Message\MessageHelper.cs" />
@@ -59,6 +60,13 @@
     <Compile Include="Message\RepMsgDataSub.cs" />
     <Compile Include="Message\ResponseMessage.cs" />
     <Compile Include="Message\ResponseMessageSub.cs" />
+    <Compile Include="Plugin\HelpPlugin.cs" />
+    <Compile Include="Plugin\Invoker.cs" />
+    <Compile Include="Plugin\InvokerContext.cs" />
+    <Compile Include="Plugin\MenuKeyPlugin.cs" />
+    <Compile Include="Plugin\Plugin.cs" />
+    <Compile Include="Plugin\PluginContext.cs" />
+    <Compile Include="Plugin\TextPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
