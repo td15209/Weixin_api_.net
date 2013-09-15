@@ -59,6 +59,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="CommonTest.cs" />
+    <Compile Include="CrawlerTest.cs" />
     <Compile Include="CredentialTest.cs" />
     <Compile Include="HtmlParserTest.cs" />
     <Compile Include="MenuTest.cs" />

@@ -31,15 +31,24 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net40\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="JuraScriptLibrary">
+      <HintPath>..\packages\JuraScript.1.0\lib\JuraScriptLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Jurassic">
+      <HintPath>..\packages\JuraScript.1.0\lib\Jurassic.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -51,6 +60,15 @@
     <Compile Include="Common\SellerContext.cs" />
     <Compile Include="Common\SellerObtainer.cs" />
     <Compile Include="Common\UserContext.cs" />
+    <Compile Include="Extra\Crawler.cs" />
+    <Compile Include="Extra\Group.cs" />
+    <Compile Include="Extra\HttpHelper.cs" />
+    <Compile Include="Extra\LoginRet.cs" />
+    <Compile Include="Extra\MsgSendResult.cs" />
+    <Compile Include="Extra\ResultPerPage.cs" />
+    <Compile Include="Extra\SendMsgType.cs" />
+    <Compile Include="Extra\WxUser.cs" />
+    <Compile Include="Extra\WxUserInfo.cs" />
     <Compile Include="Message\IMessageHandler.cs" />
     <Compile Include="Message\Message.cs" />
     <Compile Include="Message\MessageHelper.cs" />
@@ -72,6 +90,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
