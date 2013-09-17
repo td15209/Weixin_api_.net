@@ -63,7 +63,7 @@ namespace Td.Weixin.Public.Extra
         private string _token;
 
 
-        public int PageSize = 10;
+        public int PageSize = 500;
 
         public int GroupId = 0;
 
