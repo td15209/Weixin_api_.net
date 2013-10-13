@@ -15,7 +15,7 @@ namespace UnitTest
     [TestClass]
     public class CrawlerTest
     {
-        private string username = "techdong@hotmail.com";
+        private string username = "chendong2qq.com@qq.com";
         private string pwd = "wobuzd";
 
         /// <summary>

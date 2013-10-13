@@ -27,14 +27,15 @@ namespace Td.Weixin.Public.Common
         public string AccessToken { get; set; }
 
         /// <summary>
-        /// 获取默认的MenuHelper,此实例设置了默认Url并读取缓存的access_token
+        /// 获取默认的MenuHelper。
+        /// 此实例设置了默认Url并（在传递null时）读取缓存的access_token
         /// </summary>
         /// <returns></returns>
-        public static MenuHelper Create()
+        public static MenuHelper Create(string accessToken = null)
         {
             var ret = new MenuHelper
             {
-                AccessToken = Credential.CachedAccessToken,
+                AccessToken = accessToken ?? Credential.CachedAccessToken,
                 CreateUrl = CreateUrlDefault,
                 QueryUrl = QueryUrlDefault,
                 DeleteUrl = DeleteUrlDefault
@@ -98,7 +99,7 @@ namespace Td.Weixin.Public.Common
 
         public override string ToString()
         {
-            var settings = new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore};
+            var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
             return JsonConvert.SerializeObject(this, settings);
         }
     }
