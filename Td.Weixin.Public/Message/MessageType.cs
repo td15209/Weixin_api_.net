@@ -55,7 +55,19 @@ namespace Td.Weixin.Public.Message
         /// 图文消息
         /// </summary>
         [MessageType(TypeName = "news")]
-        News
+        News,
+
+        /// <summary>
+        /// 语音消息（用户的语音，可以使用TTS引擎分析成文本）
+        /// </summary>
+        [MessageType(TypeName = "voice")]
+        Voice,
+
+        /// <summary>
+        /// 视频消息
+        /// </summary>
+        [MessageType(TypeName = "video")]
+        Video
     }
 
 

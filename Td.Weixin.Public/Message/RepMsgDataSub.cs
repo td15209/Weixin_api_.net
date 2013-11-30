@@ -11,7 +11,10 @@ using System.Xml;
 
 namespace Td.Weixin.Public.Message
 {
-
+    /// <summary>
+    /// （响应）文本消息数据。
+    /// 实际就是一个字符串
+    /// </summary>
     public class TextMsgData : RepMsgData
     {
         public override string ToXmlText()

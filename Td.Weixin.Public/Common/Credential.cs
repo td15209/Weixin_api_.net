@@ -66,7 +66,7 @@ namespace Td.Weixin.Public.Common
                 if (!MultiTokenCache.ContainsKey(Appid) || string.IsNullOrEmpty(MultiTokenCache[Appid]))
                 {
                     var helper = GetHelper();
-                    var ret = helper.Get<Result>(new FormData
+                    var ret = helper.Get<CredentialResult>(new FormData
                     {
                        { "grant_type",GrantType},
                        { "appid",Appid},
@@ -114,7 +114,7 @@ namespace Td.Weixin.Public.Common
     /// <summary>
     /// 获取凭证时的响应数据
     /// </summary>
-    public class Result
+    public class CredentialResult
     {
         /// <summary>
         /// 获取到的凭证

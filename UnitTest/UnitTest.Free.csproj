@@ -68,16 +68,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Td.Weixin.Public\Td.Weixin.Public.csproj">
-      <Project>{b0c87f3b-7c5d-480f-980e-6ccb1098eed0}</Project>
-      <Name>Td.Weixin.Public</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Td.Weixin.Public\Td.Weixin.Public.Free.csproj">
+      <Project>{b0c87f3b-7c5d-480f-980e-6ccb1098eed0}</Project>
+      <Name>Td.Weixin.Public.Free</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
