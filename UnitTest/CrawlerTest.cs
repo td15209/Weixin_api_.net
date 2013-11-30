@@ -5,7 +5,10 @@
  * 
 *******************************/
 
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using Td.Weixin.Public.Extra;
@@ -15,7 +18,8 @@ namespace UnitTest
     [TestClass]
     public class CrawlerTest
     {
-        private string username = "chendong2qq.com@qq.com";
+        private string username = "techdong@hotmail.com";
+        //private string username = "chendong2qq.com@qq.com";
         private string pwd = "wobuzd";
 
         /// <summary>
@@ -38,20 +42,68 @@ namespace UnitTest
         public void UserInfo()
         {
             var c = new Crawler(username, pwd);
-            var user = c.ExecuteUserInfo("735376220");
+            c.PageSize = 500;
+            var list = c.ExecuteUserList();
 
-            Assert.AreEqual("techdong", user.Username);
+            var failedCount = 0;
+            var count = 0;
+            list.ForEach(u =>
+            {
+                count++;
+                if (count%10 == 0)
+                {
+                    //c = new Crawler(username, pwd);
+                }
+                var user = c.ExecuteUserInfo(u.id);
+                if (user != null)
+                {
+                    Debug.WriteLine("user:{0}_{1}", user.NickName, user.FakeId);
+                }
+                else
+                {
+                    failedCount++;
+                }
+
+                if (failedCount > 2)
+                {
+                    Debug.WriteLine("错误了{0}次，执行了{1}", failedCount, count);
+                    Assert.IsFalse(true);
+                }
+                    Thread.Sleep(1 * 1000);
+            });
+
+            //Assert.AreEqual("techdong", user.Username);
         }
 
         [TestMethod]
         public void SendMsg()
         {
-            var c = new Crawler(username, pwd);
-            var r = c.SendTextMsg("1100424900", "sorry ,just for test");
-            
-            Debug.WriteLine(r.msg);
+            var list = new List<string>
+            {
+                "2080509240",//弟弟
+                "1100424900", //我 
+                "2740860201" //尹
+            };
 
-            Assert.IsTrue(r.IsSuccess);
+
+            var count = 0;
+            while (count++ < 1)
+            {
+                var c = new Crawler(username, pwd);
+                list.ForEach(s =>
+                {
+                    var r = c.SendTextMsg(s, string.Format("{0}sorry,just for test at {1}", 1, DateTime.Now));
+                    Debug.WriteLine(r.msg);
+                });
+                Thread.Sleep(1 * 1000);
+            }
+
+
+            Debug.WriteLine("");
+            //var r = c.SendTextMsg("1100424900", "sorry ,just for test");
+
+            //Assert.IsTrue(r.IsSuccess);
+            //Assert.AreEqual(10, count);
         }
     }
 }

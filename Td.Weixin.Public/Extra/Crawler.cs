@@ -19,6 +19,7 @@ using System.Web.UI.WebControls;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using HtmlAgilityPack;
+using Jurassic.Library;
 
 namespace Td.Weixin.Public.Extra
 {
@@ -101,7 +102,8 @@ namespace Td.Weixin.Public.Extra
                 {"imgcode", string.Empty},
                 {"f", "json"}
             };
-            var ret = HttpHelper.Post<LoginRet>(DefaultLoginUrl, dic, _cc, DefaultLoginReferUrl);
+            var ret = HttpHelper.Post<LoginRet>(DefaultLoginUrl, dic, _cc, DefaultLoginReferUrl)
+                ?? new LoginRet() { ErrCode = -9999, ErrMsg = "超时而未收到任何服务器响应" };
             if (ret.IsSuccess)
             {
                 _token = Regex.Match(ret.ErrMsg, @"(?<=token=)\d+").Value;
@@ -135,7 +137,7 @@ namespace Td.Weixin.Public.Extra
             if (_logined)
             {
                 var url = string.Format("https://mp.weixin.qq.com/cgi-bin/home?t=home/index&token={0}&lang=zh_CN", _token);
-                _logined = HttpHelper.HeadHttpCode(url, null, _cc, null) == HttpStatusCode.OK;
+                //todo:_logined = HttpHelper.HeadHttpCode(url, null, _cc, null) == HttpStatusCode.OK;
             }
 
             if (!_logined)
@@ -171,14 +173,16 @@ namespace Td.Weixin.Public.Extra
             {
                 try
                 {
+                    se.Execute("if(typeof(wx)=='undefined') wx={}");
                     se.Execute(s.InnerText);
                 }
                 catch
                 {
+                   // se.Execute("if(!wxwx.cgiData)delete wx");
                 }
             }
-            var temp = se.GetGlobalValue("cgiData") as Jurassic.Library.ObjectInstance;
-            var r = ResultPerPage.FromObjectInstance(temp);
+            var temp = se.GetGlobalValue("wx") as Jurassic.Library.ObjectInstance;
+            var r = ResultPerPage.FromObjectInstance(temp.GetPropertyValue("cgiData") as ObjectInstance );
             return r;
         }
 
@@ -193,7 +197,11 @@ namespace Td.Weixin.Public.Extra
                 {"t", "ajax-getcontactinfo"},
                 {"fakeid", fakeid}
             };
-            return HttpHelper.Post<WxUserInfo>(DefaultUserInfoUrl, dic, _cc, null);
+            //X-Requested-With:XMLHttpRequest
+            var refer = "https://mp.weixin.qq.com/cgi-bin/contactmanage?";
+            var p = "t=user/index&pagesize=10&pageidx=0&type=0&groupid=100&token={0}&lang={1}";
+            refer = string.Format(refer, _token,Language);
+            return HttpHelper.Post<WxUserInfoResp>(DefaultUserInfoUrl, dic, _cc, refer).contact_info;
         }
 
         #region
@@ -280,7 +288,8 @@ namespace Td.Weixin.Public.Extra
                 {"fileid", 10000000},
                 {"appmsgid", 10000003}*/
             };
-            var r = HttpHelper.Post<MsgSendResult>(DefaultSendMsg, dic, _cc, refer);
+            var r = HttpHelper.Post<MsgSendResult>(DefaultSendMsg, dic, _cc, refer)
+                ?? new MsgSendResult() { ret = -9999, msg = "未收到微信服务器响应" };
             return r;
         }
     }

@@ -31,7 +31,8 @@ namespace Td.Weixin.Public.Extra
         {
             try
             {
-                var r = WebRequest.Create(string.Format("{0}?{1}", url, queryString)) as HttpWebRequest;
+                url = string.Format("{0}?{1}", url, queryString);
+                var r = CreateHttpWebRequest(url);
                 r.Referer = refer;
                 r.CookieContainer = cc;
                 r.Method = "GET";
@@ -90,7 +91,8 @@ namespace Td.Weixin.Public.Extra
         {
             try
             {
-                var r = WebRequest.Create(url) as HttpWebRequest;
+                var r = CreateHttpWebRequest(url);
+                r.Timeout = Timeout;
                 r.Method = "POST";
                 r.Referer = refer;
                 r.CookieContainer = cc;
@@ -104,13 +106,19 @@ namespace Td.Weixin.Public.Extra
                     stream.Flush();
                     stream.Close();
                 }
-                return r.GetResponse().GetResponseStream();
+                var rep = r.GetResponse();
+                return rep.GetResponseStream();
             }
             catch
             {
                 return null;
             }
         }
+
+        /// <summary>
+        /// 毫秒
+        /// </summary>
+        public static int Timeout = 5 * 1000;
 
         public static T Post<T>(string url, string data = null, CookieContainer cc = null, string refer = null)
         {
@@ -137,7 +145,8 @@ namespace Td.Weixin.Public.Extra
         {
             try
             {
-                var r = WebRequest.Create(url) as HttpWebRequest;
+                var r = CreateHttpWebRequest(url);
+                r.Timeout = Timeout;
                 r.Method = "HEAD";
                 r.Referer = refer;
                 r.CookieContainer = cc;
@@ -147,6 +156,15 @@ namespace Td.Weixin.Public.Extra
             {
                 return HttpStatusCode.ExpectationFailed;
             }
+        }
+
+        private static HttpWebRequest CreateHttpWebRequest(string url)
+        {
+            var r= WebRequest.Create(url) as HttpWebRequest;
+            //r.Headers["X-Requested-With"] = "XMLHttpRequest";
+            var s = "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Maxthon/4.1.2.4000 Chrome/26.0.1410.43 Safari/537.1";
+            //r.Headers["User-Agent"] = s;
+            return r;
         }
 
         private static string FormatData(IEnumerable<KeyValuePair<string, object>> data)

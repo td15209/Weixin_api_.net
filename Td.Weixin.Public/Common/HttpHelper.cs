@@ -62,7 +62,7 @@ namespace Td.Weixin.Public.Common
 
         private static T ReadFromResponse<T>(WebResponse rep)
         {
-            T ret = default(T);
+            var ret = default(T);
             var sm = rep.GetResponseStream();
             if (sm != null)
             {
@@ -78,7 +78,8 @@ namespace Td.Weixin.Public.Common
             if (stream != null)
             {
                 var sr = new StreamReader(stream);
-                ret = JsonConvert.DeserializeObject<T>(sr.ReadToEnd());
+                var json = sr.ReadToEnd();
+                ret = JsonConvert.DeserializeObject<T>(json);
             }
             return ret;
         }

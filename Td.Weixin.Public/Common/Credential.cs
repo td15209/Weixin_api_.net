@@ -86,6 +86,8 @@ namespace Td.Weixin.Public.Common
                     }
                 }
 
+                _accessToken = MultiTokenCache[Appid];//2013-11-28 修复bug：Appid变化后，仍然获取上个成功的access_token
+
                 return _accessToken;
             }
         }
