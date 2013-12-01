@@ -67,9 +67,10 @@
     <Compile Include="Extra\LoginRet.cs" />
     <Compile Include="Extra\MsgSendResult.cs" />
     <Compile Include="Extra\ResultPerPage.cs" />
-    <Compile Include="Extra\SendMsgType.cs" />
     <Compile Include="Extra\WxUser.cs" />
-    <Compile Include="Extra\WxUserInfo.cs" />
+    <Compile Include="Extra\WxUserInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Message\IMessageHandler.cs" />
     <Compile Include="Message\Message.cs" />
     <Compile Include="Message\MessageHelper.cs" />

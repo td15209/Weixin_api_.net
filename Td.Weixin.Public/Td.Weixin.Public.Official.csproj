@@ -53,9 +53,9 @@
     <Compile Include="Common\SellerObtainer.cs" />
     <Compile Include="Common\UserContext.cs" />
     <Compile Include="Extra\Group.cs" />
-    <Compile Include="Extra\MsgSendResult.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Extra\PushMessage.cs" />
+    <Compile Include="Extra\PushMessageData.cs" />
+    <Compile Include="Extra\PushMessageSub.cs" />
     <Compile Include="Extra\WxUser.cs" />
     <Compile Include="Extra\WxUserInfo.cs" />
     <Compile Include="Message\IMessageHandler.cs" />

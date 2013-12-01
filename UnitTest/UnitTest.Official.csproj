@@ -67,6 +67,7 @@
     <Compile Include="MsgTest.cs" />
     <Compile Include="NewsDataTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PushMsgOfficialTest .cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Td.Weixin.Public\Td.Weixin.Public.Official.csproj">

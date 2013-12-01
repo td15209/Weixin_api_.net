@@ -57,6 +57,17 @@ namespace Td.Weixin.Public.Extra
         public const string DefaultHeadImgUrl = "https://mp.weixin.qq.com/cgi-bin/getheadimg?";
         //token=1582431588&fakeid=2561215522
 
+        /// <summary>
+        /// 文本消息
+        /// </summary>
+        public const int TextMsg = 1;
+
+
+        /// <summary>
+        /// 图文消息
+        /// </summary>
+        public const int NewsMsg = 10;
+
         private bool _logined;
         private readonly string _userName;
         private readonly string _pwd;
@@ -178,11 +189,11 @@ namespace Td.Weixin.Public.Extra
                 }
                 catch
                 {
-                   // se.Execute("if(!wxwx.cgiData)delete wx");
+                    // se.Execute("if(!wxwx.cgiData)delete wx");
                 }
             }
             var temp = se.GetGlobalValue("wx") as Jurassic.Library.ObjectInstance;
-            var r = ResultPerPage.FromObjectInstance(temp.GetPropertyValue("cgiData") as ObjectInstance );
+            var r = ResultPerPage.FromObjectInstance(temp.GetPropertyValue("cgiData") as ObjectInstance);
             return r;
         }
 
@@ -200,7 +211,7 @@ namespace Td.Weixin.Public.Extra
             //X-Requested-With:XMLHttpRequest
             var refer = "https://mp.weixin.qq.com/cgi-bin/contactmanage?";
             var p = "t=user/index&pagesize=10&pageidx=0&type=0&groupid=100&token={0}&lang={1}";
-            refer = string.Format(refer, _token,Language);
+            refer = string.Format(refer, _token, Language);
             return HttpHelper.Post<WxUserInfoResp>(DefaultUserInfoUrl, dic, _cc, refer).contact_info;
         }
 
@@ -277,7 +288,7 @@ namespace Td.Weixin.Public.Extra
                     fakeid, _token);
             var dic = new Dictionary<string, object>
             {
-                {"type", SendMsgType.Text},
+                {"type", TextMsg},
                 {"content", msg},
                 {"error", "false"},
                 {"imgcode", ""},
