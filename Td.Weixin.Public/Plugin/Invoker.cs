@@ -18,6 +18,14 @@ namespace Td.Weixin.Public.Plugin
     /// </summary>
     public class Invoker
     {
+        public delegate void InvokedHandler(PluginContext cex, ResponseMessage repMessage);
+
+        /// <summary>
+        /// Invoke 完成后触发 。
+        /// 可用于记录 收到的消息、商家信息、用户信息及给予的响应信息 等。
+        /// </summary>
+        public static InvokedHandler Invoked;
+
         private static readonly List<Plugin> Plugins = new List<Plugin>();
 
         /// <summary>
@@ -81,9 +89,12 @@ namespace Td.Weixin.Public.Plugin
             }
 
             var plugin = Plugins.FirstOrDefault(p => p.CanProcess(ctx));
-            if (plugin == null) return null;
+            var rep = plugin == null ? null : plugin.Execute(ctx);//传递PluginContext
 
-            var rep = plugin.Execute(ctx);//传递PluginContext
+            //触发事件
+            if (Invoked != null)
+                Invoked(ctx, rep);
+
             return rep;
         }
 
