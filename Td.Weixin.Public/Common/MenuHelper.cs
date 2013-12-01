@@ -5,6 +5,7 @@
  * 
 *******************************/
 
+using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
@@ -52,10 +53,10 @@ namespace Td.Weixin.Public.Common
         /// </summary>
         /// <param name="menu"></param>
         /// <returns></returns>
-        public MenuResult CreateMenu(Menu menu)
+        public BasicResult CreateMenu(Menu menu)
         {
             var hh = new HttpHelper(CreateUrl);
-            var r = hh.Post<MenuResult>(menu.ToString(), new FormData { { "access_token", AccessToken } });
+            var r = hh.Post<BasicResult>(menu.ToString(), new FormData { { "access_token", AccessToken } });
 
             return r;
         }
@@ -68,18 +69,24 @@ namespace Td.Weixin.Public.Common
         {
             var hh = new HttpHelper(QueryUrl);
             var oo = new { menu = new Menu() };
-            var or = hh.GetAnonymous(new FormData { { "access_token", AccessToken } }, oo);
-            var r = or.menu;
-            return r;
+            var json = hh.GetString(new FormData { { "access_token", AccessToken } });
+            var or = JsonConvert.DeserializeAnonymousType(json, oo);
+            var ret = or.menu;
+            if (ret == null)
+            {
+                var retTemp = JsonConvert.DeserializeObject<BasicResult>(json);
+                throw new WxMenuException(retTemp.ErrCode, retTemp.ErrMsg);
+            }
+            return ret;
         }
 
         /// <summary>
         /// 取消当前使用的自定义菜单
         /// </summary>
-        public MenuResult DeleteMenu()
+        public BasicResult DeleteMenu()
         {
             var hh = new HttpHelper(DeleteUrl);
-            var r = hh.Get<MenuResult>(new FormData { { "access_token", AccessToken } });
+            var r = hh.Get<BasicResult>(new FormData { { "access_token", AccessToken } });
             return r;
         }
     }
@@ -142,17 +149,27 @@ namespace Td.Weixin.Public.Common
         public List<MenuItem> Items { get; set; }
     }
 
-    public class MenuResult
+    public class WxMenuException : Exception
     {
-        // ReSharper disable once InconsistentNaming
-        public int errcode { get; set; }
-
-        // ReSharper disable once InconsistentNaming
-        public string errmsg { get; set; }
-
-        public bool IsSuccess
+        public WxMenuException(int errCode, string errMsg)
         {
-            get { return 0 == errcode; }
+            ErrCode = errCode;
+            ErrMsg = errMsg;
+        }
+
+        public int ErrCode { get; private set; }
+
+        public string ErrMsg { get; private set; }
+
+        /// <summary>
+        /// 获取描述当前异常的消息。
+        /// </summary>
+        /// <returns>
+        /// 解释异常原因的错误消息或空字符串 ("")。
+        /// </returns>
+        public override string Message
+        {
+            get { return ErrMsg; }
         }
     }
 }

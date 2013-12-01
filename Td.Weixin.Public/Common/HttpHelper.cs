@@ -21,10 +21,13 @@ namespace Td.Weixin.Public.Common
     {
         public string Url { get; set; }
 
+        public static int Timeout = 10 * 1000;
+
         public HttpHelper(string url)
         {
             Url = url;
         }
+
 
         /// <summary>
         /// 发送Get请求
@@ -34,9 +37,7 @@ namespace Td.Weixin.Public.Common
         /// <returns></returns>
         public T Get<T>(FormData formData)
         {
-            var url = string.Format("{0}?{1}", Url, formData.Format());
-            var ret = ReadFromResponse<T>(GetStream(url));
-            return ret;
+            return JsonConvert.DeserializeObject<T>(GetString(formData));
         }
 
         public T GetAnonymous<T>(FormData formData, T anonymous)
@@ -44,12 +45,26 @@ namespace Td.Weixin.Public.Common
             return Get<T>(formData);
         }
 
+        public string GetString(FormData formData)
+        {
+            var url = string.Format("{0}?{1}", Url, formData.Format());
+            return ReadFromResponse(GetStream(url));
+        }
+
+
+        /// <summary>
+        /// 以POST方式提交数据。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="body"></param>
+        /// <param name="formData"></param>
+        /// <returns></returns>
         public T Post<T>(string body, FormData formData = null)
         {
-            var request = WebRequest.Create(string.Format("{0}?{1}", Url, formData == null ? "" : formData.Format()));
+            var request = CreateRequest(string.Format("{0}?{1}", Url, formData == null ? "" : formData.Format()));
             request.Method = "POST";
             var sw = new StreamWriter(request.GetRequestStream());
-            sw.WriteLine(body);
+            sw.Write(body);
             sw.Flush();
             sw.Close();
             T ret;
@@ -60,28 +75,39 @@ namespace Td.Weixin.Public.Common
             return ret;
         }
 
+        private static WebRequest CreateRequest(string url)
+        {
+            var ret = WebRequest.Create(url);
+            ret.Timeout = Timeout;
+
+            return ret;
+        }
+
         private static T ReadFromResponse<T>(WebResponse rep)
         {
-            var ret = default(T);
             var sm = rep.GetResponseStream();
-            if (sm != null)
-            {
-                var sr = new StreamReader(sm);
-                ret = JsonConvert.DeserializeObject<T>(sr.ReadToEnd());
-            }
-            return ret;
+            return ReadFromResponse<T>(sm);
         }
 
         private static T ReadFromResponse<T>(Stream stream)
         {
-            T ret = default(T);
-            if (stream != null)
-            {
-                var sr = new StreamReader(stream);
-                var json = sr.ReadToEnd();
-                ret = JsonConvert.DeserializeObject<T>(json);
-            }
+            var ret = JsonConvert.DeserializeObject<T>(ReadFromResponse(stream));
             return ret;
+        }
+
+
+        private static string ReadFromResponse(WebResponse rep)
+        {
+            var sm = rep.GetResponseStream();
+            return ReadFromResponse(sm);
+        }
+        private static string ReadFromResponse(Stream stream)
+        {
+            if (stream == null)
+                return null;
+
+            var sr = new StreamReader(stream);
+            return sr.ReadToEnd();
         }
 
         /// <summary>
@@ -91,7 +117,7 @@ namespace Td.Weixin.Public.Common
         /// <returns></returns>
         public static Stream GetStream(string url)
         {
-            var request = WebRequest.Create(url);
+            var request = CreateRequest(url);
             request.Method = "GET";
             return request.GetResponse().GetResponseStream();
         }

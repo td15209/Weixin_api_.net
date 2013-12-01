@@ -31,7 +31,7 @@ namespace UnitTest
             var menu = Menu.FromJson(json);
             var r = h.CreateMenu(menu);
 
-            Debug.WriteLine(r.errmsg);
+            Debug.WriteLine(r.ErrMsg);
             Debug.WriteLine(menu);
 
             Assert.IsTrue(r.IsSuccess);
@@ -53,8 +53,10 @@ namespace UnitTest
         public void DeleteMenu()
         {
             var h = MenuHelper.Create();
+            h.AccessToken = Credential.Create().AccessToken;
             var r = h.DeleteMenu();
 
+            Debug.WriteLine(r.ErrMsg);
             Assert.IsTrue(r.IsSuccess);
         }
     }
