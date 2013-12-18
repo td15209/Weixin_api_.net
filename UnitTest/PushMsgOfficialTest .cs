@@ -146,5 +146,20 @@ namespace UnitTest
 
         #endregion
 
+        [TestMethod]
+        public void PushTextMsg()
+        {
+            var msg = new PushTextMessage()
+            {
+                ToUser = "123",
+                Text = "你好"
+            };
+
+            var ret = MessagePusher.Default.Push(msg);
+
+            Debug.WriteLine(ret.ErrMsg);
+
+            Assert.IsTrue(ret.IsSuccess);
+        }
     }
 }

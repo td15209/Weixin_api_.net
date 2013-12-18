@@ -53,6 +53,7 @@
     <Compile Include="Common\SellerObtainer.cs" />
     <Compile Include="Common\UserContext.cs" />
     <Compile Include="Extra\Group.cs" />
+    <Compile Include="Extra\MessagePusher.cs" />
     <Compile Include="Extra\PushMessage.cs" />
     <Compile Include="Extra\PushMessageData.cs" />
     <Compile Include="Extra\PushMessageSub.cs" />
