@@ -36,6 +36,15 @@ namespace Td.Weixin.Public.Common
         }
 
         /// <summary>
+        /// 移除缓存的token
+        /// </summary>
+        /// <param name="appId"></param>
+        public static void RemoveCache(string appId)
+        {
+            MultiTokenCache.Remove(appId);
+        }
+
+        /// <summary>
         /// 获取access_token填写client_credential
         /// </summary>
         public string GrantType
@@ -79,8 +88,11 @@ namespace Td.Weixin.Public.Common
                     if (ret.IsSuccess)
                     {
                         var autoEvent = new AutoResetEvent(false);
-                        var timer = new Timer(state => { _accessToken = null;
-                                                           autoEvent.Set();
+                        var curAppid = Appid;
+                        var timer = new Timer(state =>
+                        {
+                            MultiTokenCache.Remove(curAppid);
+                            autoEvent.Set();
                         }, autoEvent, (ret.expires_in - 3)/*避免时间误差*/ * 1000, Timeout.Infinite);
                         timer.Dispose(autoEvent);
                     }
