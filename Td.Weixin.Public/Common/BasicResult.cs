@@ -5,6 +5,7 @@
  * 
 *******************************/
 
+using System;
 using Newtonsoft.Json;
 
 namespace Td.Weixin.Public.Common
@@ -32,6 +33,20 @@ namespace Td.Weixin.Public.Common
         public bool IsSuccess
         {
             get { return ErrCode == 0; }
+        }
+
+        public static BasicResult GetSuccess(string msg = null)
+        {
+            return new BasicResult { ErrCode = 0, ErrMsg = msg ?? "完成" };
+        }
+
+        public static BasicResult GetFailed(string msg, Exception ex = null)
+        {
+            return new BasicResult
+            {
+                ErrCode = -1,
+                ErrMsg = string.Format("{0}\n{1}", msg, ex != null ? "发生异常：" + ex.Message : string.Empty)
+            };
         }
     }
 }

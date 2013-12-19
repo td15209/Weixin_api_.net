@@ -47,12 +47,14 @@
     <Compile Include="Common\BasicResult.cs" />
     <Compile Include="Common\Credential.cs" />
     <Compile Include="Common\EntrySign.cs" />
+    <Compile Include="Common\Exception.cs" />
     <Compile Include="Common\HttpHelper.cs" />
     <Compile Include="Common\MenuHelper.cs" />
     <Compile Include="Common\SellerContext.cs" />
     <Compile Include="Common\SellerObtainer.cs" />
     <Compile Include="Common\UserContext.cs" />
     <Compile Include="Extra\Group.cs" />
+    <Compile Include="Extra\MediaManager.cs" />
     <Compile Include="Extra\MessagePusher.cs" />
     <Compile Include="Extra\PushMessage.cs" />
     <Compile Include="Extra\PushMessageData.cs" />

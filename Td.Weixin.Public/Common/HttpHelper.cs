@@ -12,6 +12,7 @@ using System.Linq;
 using System.Net;
 using System.Security.Policy;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 using Newtonsoft.Json;
 
@@ -19,9 +20,11 @@ namespace Td.Weixin.Public.Common
 {
     public class HttpHelper
     {
+        public static int Timeout = 10 * 1000;
         public string Url { get; set; }
 
-        public static int Timeout = 10 * 1000;
+        private static Encoding Encoding = Encoding.UTF8;
+
 
         public HttpHelper(string url)
         {
@@ -63,7 +66,7 @@ namespace Td.Weixin.Public.Common
         {
             var request = CreateRequest(string.Format("{0}?{1}", Url, formData == null ? "" : formData.Format()));
             request.Method = "POST";
-            var sw = new StreamWriter(request.GetRequestStream());
+            var sw = new StreamWriter(request.GetRequestStream(), Encoding);
             sw.Write(body);
             sw.Flush();
             sw.Close();
@@ -75,7 +78,12 @@ namespace Td.Weixin.Public.Common
             return ret;
         }
 
-        private static WebRequest CreateRequest(string url)
+        /// <summary>
+        /// 创建一个请求
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        internal static WebRequest CreateRequest(string url)
         {
             var ret = WebRequest.Create(url);
             ret.Timeout = Timeout;
@@ -95,18 +103,12 @@ namespace Td.Weixin.Public.Common
             return ret;
         }
 
-
-        private static string ReadFromResponse(WebResponse rep)
-        {
-            var sm = rep.GetResponseStream();
-            return ReadFromResponse(sm);
-        }
         private static string ReadFromResponse(Stream stream)
         {
             if (stream == null)
                 return null;
 
-            var sr = new StreamReader(stream);
+            var sr = new StreamReader(stream, Encoding);
             return sr.ReadToEnd();
         }
 
@@ -121,6 +123,20 @@ namespace Td.Weixin.Public.Common
             request.Method = "GET";
             return request.GetResponse().GetResponseStream();
         }
+
+        /// <summary>
+        /// 上传文件。formData参数附加到url
+        /// </summary>
+        /// <param name="formData"></param>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        public string Upload(FormData formData, string filePath)
+        {
+            var url = string.Format("{0}?{1}", Url, formData == null ? "" : formData.Format());
+            var data = new WebClient().UploadFile(url, "POST", filePath);
+            return Encoding.GetString(data);
+        }
+
     }
 
     public class FormData : Dictionary<string, object>

@@ -63,6 +63,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="HtmlParserTest.cs" />
+    <Compile Include="MediaTest.cs" />
     <Compile Include="MenuTest.cs" />
     <Compile Include="MsgTest.cs" />
     <Compile Include="NewsDataTest.cs" />

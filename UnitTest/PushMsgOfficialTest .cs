@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
+using Td.Weixin.Public.Common;
 using Td.Weixin.Public.Extra;
 
 namespace UnitTest
@@ -151,10 +152,32 @@ namespace UnitTest
         {
             var msg = new PushTextMessage()
             {
-                ToUser = "123",
+                ToUser = "oaKZbtyB06l2QpTX6loCNYfoHD9A",
                 Text = "你好"
             };
+            if (Credential.CachedAccessToken == null)
+            {
+                var t = Credential.Create().AccessToken;
+            }
+            var ret = MessagePusher.Default.Push(msg);
 
+            Debug.WriteLine(ret.ErrMsg);
+
+            Assert.IsTrue(ret.IsSuccess);
+        }
+
+        [TestMethod]
+        public void PushImageMsg()
+        {
+            var msg = new PushImageMessage() 
+            {
+                ToUser = "oaKZbtyB06l2QpTX6loCNYfoHD9A",
+                Image = "mLtXk9ttRQaWBC0Cjzg24ZXtx0mcSInMcssLCWi2qbpUSuWbkeCYumwMkmZPtFz-"
+            };
+            if (Credential.CachedAccessToken == null)
+            {
+                var t = Credential.Create().AccessToken;
+            }
             var ret = MessagePusher.Default.Push(msg);
 
             Debug.WriteLine(ret.ErrMsg);

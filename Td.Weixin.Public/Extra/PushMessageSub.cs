@@ -37,6 +37,9 @@ namespace Td.Weixin.Public.Extra
             MsgType = ImageMsg;
         }
 
+        /// <summary>
+        /// 图片数据
+        /// </summary>
         [JsonProperty(PropertyName = "image")]
         public PushMsgImageData Image { get; set; }
     }
@@ -52,7 +55,7 @@ namespace Td.Weixin.Public.Extra
         }
 
         /// <summary>
-        /// 
+        /// 语音数据
         /// </summary>
         [JsonProperty(PropertyName = "voice")]
         public PushMsgVoiceData Voice { get; set; }
@@ -69,7 +72,7 @@ namespace Td.Weixin.Public.Extra
         }
 
         /// <summary>
-        /// 
+        /// 视频数据
         /// </summary>
         [JsonProperty(PropertyName = "video")]
         public PushMsgVideoData Voice { get; set; }
@@ -86,7 +89,7 @@ namespace Td.Weixin.Public.Extra
         }
 
         /// <summary>
-        /// 
+        /// 音乐数据
         /// </summary>
         [JsonProperty(PropertyName = "music")]
         public PushMsgMusicData Music { get; set; }
@@ -103,7 +106,7 @@ namespace Td.Weixin.Public.Extra
         }
 
         /// <summary>
-        /// 
+        /// 图文数据
         /// </summary>
         [JsonProperty(PropertyName = "news")]
         public PushMsgNewsData News { get; set; }

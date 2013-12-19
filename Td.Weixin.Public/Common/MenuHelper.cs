@@ -149,27 +149,16 @@ namespace Td.Weixin.Public.Common
         public List<MenuItem> Items { get; set; }
     }
 
-    public class WxMenuException : Exception
+    public class WxMenuException : WxException
     {
         public WxMenuException(int errCode, string errMsg)
+            : base(errCode, errMsg)
         {
-            ErrCode = errCode;
-            ErrMsg = errMsg;
         }
 
-        public int ErrCode { get; private set; }
-
-        public string ErrMsg { get; private set; }
-
-        /// <summary>
-        /// 获取描述当前异常的消息。
-        /// </summary>
-        /// <returns>
-        /// 解释异常原因的错误消息或空字符串 ("")。
-        /// </returns>
-        public override string Message
+        public WxMenuException(BasicResult ret)
+            : base(ret)
         {
-            get { return ErrMsg; }
         }
     }
 }
