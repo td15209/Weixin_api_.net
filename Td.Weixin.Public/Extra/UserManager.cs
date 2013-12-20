@@ -123,7 +123,7 @@ namespace Td.Weixin.Public.Extra
         /// <param name="openid"></param>
         /// <param name="groupId"></param>
         /// <returns></returns>
-        public BasicResult MoveUserTo(string openid, string groupId)
+        public BasicResult MoveUserTo(string openid, int groupId)
         {
             var ao = new { openid = openid, to_groupid = groupId };
             var s = new HttpHelper(UserUpdateUrl).PostString(JsonConvert.SerializeObject(ao), new FormData

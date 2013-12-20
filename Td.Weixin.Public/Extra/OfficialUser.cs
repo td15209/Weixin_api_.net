@@ -69,7 +69,7 @@ namespace Td.Weixin.Public.Extra
         /// </summary>
         /// <param name="groupId"></param>
         /// <returns></returns>
-        public BasicResult MoveTo(string groupId)
+        public BasicResult MoveTo(int groupId)
         {
             return UserManager.Default.MoveUserTo(openid, groupId);
         }

@@ -94,11 +94,11 @@ namespace UnitTest
             }
 
             //移动用户到组
-           // var ret = UserManager.Default.MoveUserTo(_openid, "101");
+           // var ret = UserManager.Default.MoveUserTo(_openid, 101);
 
             //如果已经获取到用户，可以以另一种方式移动
             var user = new WxUserInfo() {openid = _openid};//模拟获取一个用户
-            var ret = user.MoveTo("101");
+            var ret = user.MoveTo(101);
 
             Debug.WriteLine(ret.ErrMsg);
 
