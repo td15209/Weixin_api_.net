@@ -150,15 +150,15 @@ namespace UnitTest
         [TestMethod]
         public void PushTextMsg()
         {
+            if (Credential.CachedAccessToken == null)
+            {
+                var t = Credential.Create().AccessToken;
+            }
             var msg = new PushTextMessage()
             {
                 ToUser = "oaKZbtyB06l2QpTX6loCNYfoHD9A",
                 Text = "你好"
             };
-            if (Credential.CachedAccessToken == null)
-            {
-                var t = Credential.Create().AccessToken;
-            }
             var ret = MessagePusher.Default.Push(msg);
 
             Debug.WriteLine(ret.ErrMsg);
@@ -169,15 +169,15 @@ namespace UnitTest
         [TestMethod]
         public void PushImageMsg()
         {
+            if (Credential.CachedAccessToken == null)
+            {
+                var t = Credential.Create().AccessToken;
+            }
             var msg = new PushImageMessage() 
             {
                 ToUser = "oaKZbtyB06l2QpTX6loCNYfoHD9A",
                 Image = "mLtXk9ttRQaWBC0Cjzg24ZXtx0mcSInMcssLCWi2qbpUSuWbkeCYumwMkmZPtFz-"
             };
-            if (Credential.CachedAccessToken == null)
-            {
-                var t = Credential.Create().AccessToken;
-            }
             var ret = MessagePusher.Default.Push(msg);
 
             Debug.WriteLine(ret.ErrMsg);
