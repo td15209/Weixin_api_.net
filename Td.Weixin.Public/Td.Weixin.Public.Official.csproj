@@ -57,11 +57,11 @@
     <Compile Include="Extra\GroupManager.cs" />
     <Compile Include="Extra\MediaManager.cs" />
     <Compile Include="Extra\MessagePusher.cs" />
+    <Compile Include="Extra\OfficialUser.cs" />
     <Compile Include="Extra\PushMessage.cs" />
     <Compile Include="Extra\PushMessageData.cs" />
     <Compile Include="Extra\PushMessageSub.cs" />
-    <Compile Include="Extra\WxUser.cs" />
-    <Compile Include="Extra\WxUserInfo.cs" />
+    <Compile Include="Extra\UserManager.cs" />
     <Compile Include="Message\IMessageHandler.cs" />
     <Compile Include="Message\Message.cs" />
     <Compile Include="Message\MessageHelper.cs" />

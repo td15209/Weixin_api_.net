@@ -37,7 +37,7 @@ namespace UnitTest
             }
             catch (WxMenuException ex)
             {
-                Debug.WriteLine(ex.ErrMsg);
+                Assert.Fail(ex.ErrMsg);
 
             }
         }
@@ -50,7 +50,7 @@ namespace UnitTest
             {
                 var t = Credential.Create().AccessToken;
             }
-            
+
             //下载
             var directory = @"F:\移动硬盘\图片\images\f.jpg";
             var ret = MediaManager.Default.Download("mLtXk9ttRQaWBC0Cjzg24ZXtx0mcSInMcssLCWi2qbpUSuWbkeCYumwMkmZPtFz-", directory);
