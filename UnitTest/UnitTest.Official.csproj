@@ -62,6 +62,7 @@
     <Compile Include="CredentialTest.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="GroupTest.cs" />
     <Compile Include="HtmlParserTest.cs" />
     <Compile Include="MediaTest.cs" />
     <Compile Include="MenuTest.cs" />

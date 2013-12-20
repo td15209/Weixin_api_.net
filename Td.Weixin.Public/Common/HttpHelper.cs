@@ -23,7 +23,7 @@ namespace Td.Weixin.Public.Common
         public static int Timeout = 10 * 1000;
         public string Url { get; set; }
 
-        private static Encoding Encoding = Encoding.UTF8;
+        public static Encoding Encoding = Encoding.UTF8;
 
 
         public HttpHelper(string url)
@@ -64,18 +64,29 @@ namespace Td.Weixin.Public.Common
         /// <returns></returns>
         public T Post<T>(string body, FormData formData = null)
         {
+            var s = PostString(body, formData);
+            return JsonConvert.DeserializeObject<T>(s);
+        }
+
+        /// <summary>
+        /// 以post方式提交，将响应编码为字串。
+        /// </summary>
+        /// <param name="body"></param>
+        /// <param name="formData"></param>
+        /// <returns></returns>
+        public string PostString(string body, FormData formData)
+        {
             var request = CreateRequest(string.Format("{0}?{1}", Url, formData == null ? "" : formData.Format()));
             request.Method = "POST";
-            var sw = new StreamWriter(request.GetRequestStream(), Encoding);
+            var sw = new StreamWriter(request.GetRequestStream());//注意，StreamWriter不能带编码的构造，否则会在前面写入编码标识(比utf8：ef bb bf)
             sw.Write(body);
             sw.Flush();
-            sw.Close();
-            T ret;
-            using (var rep = request.GetResponse())
+            sw.Close();;
+            using (var rep = request.GetResponse().GetResponseStream())
             {
-                ret = ReadFromResponse<T>(rep);
+                var ret = ReadFromResponse(rep);
+                return ret;
             }
-            return ret;
         }
 
         /// <summary>
@@ -136,7 +147,6 @@ namespace Td.Weixin.Public.Common
             var data = new WebClient().UploadFile(url, "POST", filePath);
             return Encoding.GetString(data);
         }
-
     }
 
     public class FormData : Dictionary<string, object>

@@ -5,6 +5,7 @@
  * 
 *******************************/
 
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace Td.Weixin.Public.Extra
@@ -23,7 +24,25 @@ namespace Td.Weixin.Public.Extra
         /// <summary>
         /// 组下用户数
         /// </summary>
-        [JsonProperty(PropertyName = "cnt")]
-        public int Cnt { get; set; }
+        [JsonProperty(PropertyName = "count")]
+        public int Count { get; set; }
+    }
+
+    /// <summary>
+    /// “查询分组”接口的返回结构
+    /// </summary>
+    public class WxGroupQueryResult
+    {
+        [JsonProperty(PropertyName = "groups")]
+        public List<WxGroup> Groups { get; set; } 
+    }
+
+    /// <summary>
+    /// “创建分组”接口返回结构
+    /// </summary>
+    public class WxGroupCreateResult
+    {
+        [JsonProperty(PropertyName = "group")]
+        public WxGroup Group { get; set; }
     }
 }

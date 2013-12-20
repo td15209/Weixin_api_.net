@@ -54,6 +54,7 @@
     <Compile Include="Common\SellerObtainer.cs" />
     <Compile Include="Common\UserContext.cs" />
     <Compile Include="Extra\Group.cs" />
+    <Compile Include="Extra\GroupManager.cs" />
     <Compile Include="Extra\MediaManager.cs" />
     <Compile Include="Extra\MessagePusher.cs" />
     <Compile Include="Extra\PushMessage.cs" />
