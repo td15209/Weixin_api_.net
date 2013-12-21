@@ -27,8 +27,8 @@ namespace UnitTest
                 //上传
                 var ret = MediaManager.Default.Upload(new LocalMedia
                 {
-                    MediaType = Media.Image,
-                    MediaPath = @"F:\移动硬盘\图片\1-1.jpg" //@"F:\移动硬盘\我的文档\美图图库\示例图片_02.jpg"
+                    MediaType = Media.Image,//媒体类型，此处为图片为例
+                    MediaPath = @"F:\移动硬盘\图片\1-1.jpg" //本地图片路径
                 });
 
                 Debug.WriteLine(ret.MediaID, ret.Timestamp);
@@ -52,7 +52,9 @@ namespace UnitTest
             }
 
             //下载
+            //文件的保存路径。如果不确定以什么文件名保存，希望以默认文件名（媒体id为文件名）保存，可指定以反斜杠"\"结尾的文件名
             var directory = @"F:\移动硬盘\图片\images\f.jpg";
+
             var ret = MediaManager.Default.Download("mLtXk9ttRQaWBC0Cjzg24ZXtx0mcSInMcssLCWi2qbpUSuWbkeCYumwMkmZPtFz-", directory);
 
             Debug.WriteLine(ret.ErrMsg, ret.ErrCode);

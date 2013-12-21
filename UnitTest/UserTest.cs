@@ -48,6 +48,7 @@ namespace UnitTest
             }
             try
             {
+                //回调函数
                 var callback = new Action<WxUserListResult, int>((ret, currentPage) =>
                 {
                     Debug.WriteLine("总数：" + ret.total + ",当前页：" + currentPage);
@@ -56,6 +57,7 @@ namespace UnitTest
                         Debug.WriteLine(s);
                     }
                 });
+
                 //分页获取，每页10000
                 UserManager.Default.GetUserList(callback);
             }
@@ -93,11 +95,11 @@ namespace UnitTest
                 var t = Credential.Create().AccessToken;
             }
 
-            //移动用户到组
-           // var ret = UserManager.Default.MoveUserTo(_openid, 101);
+            //方式1、移动用户到组
+            //var ret = UserManager.Default.MoveUserTo(_openid, 101);
 
-            //如果已经获取到用户，可以以另一种方式移动
-            var user = new WxUserInfo() {openid = _openid};//模拟获取一个用户
+            //方式2、如果已经获取到用户，可以以另一种方式移动
+            var user = new WxUserInfo() { openid = _openid };//模拟获取一个用户
             var ret = user.MoveTo(101);
 
             Debug.WriteLine(ret.ErrMsg);

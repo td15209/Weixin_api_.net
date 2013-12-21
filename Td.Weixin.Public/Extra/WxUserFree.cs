@@ -12,7 +12,7 @@ namespace Td.Weixin.Public.Extra
     /// <summary>
     /// 微信粉丝概要
     /// </summary>
-    public class WxUser
+    public class WxUserFree
     {
         /// <summary>
         /// 即fakeid

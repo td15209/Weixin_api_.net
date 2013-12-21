@@ -113,7 +113,7 @@ namespace Td.Weixin.Public.Extra
                 {"imgcode", string.Empty},
                 {"f", "json"}
             };
-            var ret = HttpHelper.Post<LoginRet>(DefaultLoginUrl, dic, _cc, DefaultLoginReferUrl)
+            var ret = HttpExtendedHelper.Post<LoginRet>(DefaultLoginUrl, dic, _cc, DefaultLoginReferUrl)
                 ?? new LoginRet() { ErrCode = -9999, ErrMsg = "超时而未收到任何服务器响应" };
             if (ret.IsSuccess)
             {
@@ -126,13 +126,13 @@ namespace Td.Weixin.Public.Extra
             return ret;
         }
 
-        public List<WxUser> ExecuteUserList()
+        public List<WxUserFree> ExecuteUserList()
         {
             PreLogin();
 
-            var ret = new List<WxUser>();
+            var ret = new List<WxUserFree>();
             var index = 0;
-            ResultPerPage r;
+            ResultPerPageFree r;
             do
             {
                 r = InnerUserList(_token, PageSize, index++);
@@ -162,7 +162,7 @@ namespace Td.Weixin.Public.Extra
             }
         }
 
-        private ResultPerPage InnerUserList(string token, int pageSize, int pageIndex)
+        private ResultPerPageFree InnerUserList(string token, int pageSize, int pageIndex)
         {
             var dic = new Dictionary<string, object>
             {
@@ -175,7 +175,7 @@ namespace Td.Weixin.Public.Extra
                 {"lang", Language},
             };
             //var s = HttpHelper.GetString(DefaultUserListUrl, dic, _cc, null);
-            var stream = HttpHelper.Get(DefaultUserListUrl, dic, _cc, null);
+            var stream = HttpExtendedHelper.Get(DefaultUserListUrl, dic, _cc, null);
             var doc = new HtmlDocument();
             doc.Load(stream, Encoding);
             var ss = doc.DocumentNode.SelectNodes("//script");
@@ -193,11 +193,11 @@ namespace Td.Weixin.Public.Extra
                 }
             }
             var temp = se.GetGlobalValue("wx") as Jurassic.Library.ObjectInstance;
-            var r = ResultPerPage.FromObjectInstance(temp.GetPropertyValue("cgiData") as ObjectInstance);
+            var r = ResultPerPageFree.FromObjectInstance(temp.GetPropertyValue("cgiData") as ObjectInstance);
             return r;
         }
 
-        public WxUserInfo ExecuteUserInfo(string fakeid)
+        public WxUserInfoFree ExecuteUserInfo(string fakeid)
         {
             PreLogin();
 
@@ -212,7 +212,7 @@ namespace Td.Weixin.Public.Extra
             var refer = "https://mp.weixin.qq.com/cgi-bin/contactmanage?";
             var p = "t=user/index&pagesize=10&pageidx=0&type=0&groupid=100&token={0}&lang={1}";
             refer = string.Format(refer, _token, Language);
-            return HttpHelper.Post<WxUserInfoResp>(DefaultUserInfoUrl, dic, _cc, refer).contact_info;
+            return HttpExtendedHelper.Post<WxUserInfoRespFree>(DefaultUserInfoUrl, dic, _cc, refer).contact_info;
         }
 
         #region
@@ -299,7 +299,7 @@ namespace Td.Weixin.Public.Extra
                 {"fileid", 10000000},
                 {"appmsgid", 10000003}*/
             };
-            var r = HttpHelper.Post<MsgSendResult>(DefaultSendMsg, dic, _cc, refer)
+            var r = HttpExtendedHelper.Post<MsgSendResult>(DefaultSendMsg, dic, _cc, refer)
                 ?? new MsgSendResult() { ret = -9999, msg = "未收到微信服务器响应" };
             return r;
         }

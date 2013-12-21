@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
@@ -154,6 +155,8 @@ namespace UnitTest
             {
                 var t = Credential.Create().AccessToken;
             }
+
+            //文本消息
             var msg = new PushTextMessage()
             {
                 ToUser = "oaKZbtyB06l2QpTX6loCNYfoHD9A",
@@ -173,16 +176,65 @@ namespace UnitTest
             {
                 var t = Credential.Create().AccessToken;
             }
-            var msg = new PushImageMessage() 
+
+            //图片消息
+            var msg = new PushImageMessage()
             {
                 ToUser = "oaKZbtyB06l2QpTX6loCNYfoHD9A",
-                Image = "mLtXk9ttRQaWBC0Cjzg24ZXtx0mcSInMcssLCWi2qbpUSuWbkeCYumwMkmZPtFz-"
+                Image = "mLtXk9ttRQaWBC0Cjzg24ZXtx0mcSInMcssLCWi2qbpUSuWbkeCYumwMkmZPtFz-" //可以直接设置图片id
             };
             var ret = MessagePusher.Default.Push(msg);
 
             Debug.WriteLine(ret.ErrMsg);
 
             Assert.IsTrue(ret.IsSuccess);
+        }
+
+        [TestMethod]
+        public void PushNewsTest()
+        {
+            if (Credential.CachedAccessToken == null)
+            {
+                var t = Credential.Create().AccessToken;
+            }
+
+            //图片图文
+            var news = new PushMsgNewsData();//定义图片内容
+            news.Articles.AddRange(new List<PushMsgNewsItem>
+                {
+                    new PushMsgNewsItem()
+                    {
+                        Description = "这是描述",
+                        PicUrl = "http://blog.tecd.pw/wp-content/uploads/http://bcs.duapp.com/td-bucket//blog/201309//QQ%E5%9B%BE%E7%89%8720130914160223.jpg",
+                        Title = "这是标题",
+                        Url = "http://blog.tecd.pw"
+                    },
+                    new PushMsgNewsItem()
+                    {
+                        Description = "这是描述",
+                        PicUrl = "http://blog.tecd.pw/wp-content/uploads/http://bcs.duapp.com/td-bucket//blog/201309//QQ%E5%9B%BE%E7%89%8720130914160223.jpg",
+                        Title = "这是标题",
+                        Url = "http://blog.tecd.pw"
+                    },
+                    new PushMsgNewsItem()
+                    {
+                        Description = "这是描述",
+                        PicUrl = "http://blog.tecd.pw/wp-content/uploads/http://bcs.duapp.com/td-bucket//blog/201309//QQ%E5%9B%BE%E7%89%8720130914160223.jpg",
+                        Title = "这是标题",
+                        Url = "http://blog.tecd.pw"
+                    },
+                });
+            var msg = new PushNewsMessage()
+            {
+                ToUser = "oaKZbtyB06l2QpTX6loCNYfoHD9A",
+                News = news
+            };
+            var ret = MessagePusher.Default.Push(msg);
+
+            Debug.WriteLine(ret.ErrMsg);
+
+            Assert.IsTrue(ret.IsSuccess);
+
         }
     }
 }

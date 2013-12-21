@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
 using Td.Weixin.Public.Common;
+using HttpHelper=Td.Weixin.Public.Common.HttpHelper;
 
 namespace Td.Weixin.Public.Extra
 {
@@ -23,7 +24,9 @@ namespace Td.Weixin.Public.Extra
 
         public const string DefaultUpdateUrl = "https://api.weixin.qq.com/cgi-bin/groups/update";
 
-
+        /// <summary>
+        /// 使用缓存的accesstoken创建实例
+        /// </summary>
         public static GroupManager Default
         {
             get { return new GroupManager(Credential.CachedAccessToken); }

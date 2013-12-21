@@ -56,6 +56,7 @@
     <Compile Include="Common\BasicResult.cs" />
     <Compile Include="Common\Credential.cs" />
     <Compile Include="Common\EntrySign.cs" />
+    <Compile Include="Common\Exception.cs" />
     <Compile Include="Common\HttpHelper.cs" />
     <Compile Include="Common\MenuHelper.cs" />
     <Compile Include="Common\SellerContext.cs" />
@@ -63,12 +64,30 @@
     <Compile Include="Common\UserContext.cs" />
     <Compile Include="Extra\Crawler.cs" />
     <Compile Include="Extra\Group.cs" />
+    <Compile Include="Extra\GroupManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Extra\HttpHelper.cs" />
     <Compile Include="Extra\LoginRet.cs" />
+    <Compile Include="Extra\MediaManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extra\MessagePusher.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Extra\MsgSendResult.cs" />
-    <Compile Include="Extra\ResultPerPage.cs" />
-    <Compile Include="Extra\WxUser.cs" />
-    <Compile Include="Extra\WxUserInfo.cs">
+    <Compile Include="Extra\OfficialUser.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extra\PushMessage.cs" />
+    <Compile Include="Extra\PushMessageData.cs" />
+    <Compile Include="Extra\PushMessageSub.cs" />
+    <Compile Include="Extra\ResultPerPageFree.cs" />
+    <Compile Include="Extra\UserManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extra\WxUserFree.cs" />
+    <Compile Include="Extra\WxUserInfoFree.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Message\IMessageHandler.cs" />

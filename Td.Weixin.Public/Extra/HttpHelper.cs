@@ -15,7 +15,7 @@ using Newtonsoft.Json;
 
 namespace Td.Weixin.Public.Extra
 {
-    public class HttpHelper
+    public class HttpExtendedHelper
     {
         public static Encoding DefaultEncoding = Encoding.UTF8;
 

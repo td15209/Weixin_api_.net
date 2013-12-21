@@ -70,6 +70,7 @@
     <Compile Include="NewsDataTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PushMsgOfficialTest .cs" />
+    <Compile Include="QrCodeTest.cs" />
     <Compile Include="UserTest.cs" />
   </ItemGroup>
   <ItemGroup>

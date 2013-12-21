@@ -15,7 +15,7 @@ using Newtonsoft.Json.Serialization;
 
 namespace Td.Weixin.Public.Extra
 {
-    public class ResultPerPage
+    public class ResultPerPageFree
     {
         [JsonProperty(PropertyName = "pageIdx")]
         public int PageIndex { get; set; }
@@ -30,15 +30,15 @@ namespace Td.Weixin.Public.Extra
         public List<WxGroup> GroupsList { get; set; }
 
         [JsonProperty(PropertyName = "friendsList")]
-        public List<WxUser> FriendsList { get; set; }
+        public List<WxUserFree> FriendsList { get; set; }
 
         [JsonProperty(PropertyName = "currentGroupId")]
         public int CurrentGroupId { get; set; }
 
-        public static ResultPerPage FromObjectInstance(Jurassic.Library.ObjectInstance instance)
+        public static ResultPerPageFree FromObjectInstance(Jurassic.Library.ObjectInstance instance)
         {
             /*为了简单，省去1万地反射...*/
-            var ret = new ResultPerPage();
+            var ret = new ResultPerPageFree();
             foreach (var pi in ret.GetType().GetProperties())
             {
                 try
@@ -58,7 +58,7 @@ namespace Td.Weixin.Public.Extra
                         var ls = value as ArrayInstance;
                         if (ls != null)
                         {
-                            var wxGroups = (from ObjectInstance o in ls.ElementValues select FromObject<WxUser>(o)).ToList();
+                            var wxGroups = (from ObjectInstance o in ls.ElementValues select FromObject<WxUserFree>(o)).ToList();
                             pi.SetValue(ret, wxGroups, null);
                         }
                     }

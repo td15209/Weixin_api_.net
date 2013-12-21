@@ -43,6 +43,8 @@ namespace UnitTest
                 {
                     var t = Credential.Create().AccessToken;
                 }
+
+                //获得所有分组
                 var r = GroupManager.Default.Query();
 
                 Debug.WriteLine("分组数：" + r.Groups.Count);
