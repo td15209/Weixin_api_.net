@@ -82,6 +82,7 @@
     <Compile Include="Extra\PushMessage.cs" />
     <Compile Include="Extra\PushMessageData.cs" />
     <Compile Include="Extra\PushMessageSub.cs" />
+    <Compile Include="Extra\QrCode.cs" />
     <Compile Include="Extra\ResultPerPageFree.cs" />
     <Compile Include="Extra\UserManager.cs">
       <SubType>Code</SubType>

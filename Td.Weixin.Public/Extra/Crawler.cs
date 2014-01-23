@@ -49,7 +49,11 @@ namespace Td.Weixin.Public.Extra
         /// <summary>
         /// 发发送消息。
         /// </summary>
-        public const string DefaultSendMsg = "https://mp.weixin.qq.com/cgi-bin/singlesend?t=ajax-response&lang=zh_CN";
+        public const string DefaultSendMsg = "https://mp.weixin.qq.com/cgi-bin/singlesend";
+
+
+        //
+        public const string DefaultSendToAll = "https://mp.weixin.qq.com/cgi-bin/masssend";
 
         /// <summary>
         /// 获取头像地址。从此地址请求的响应就是图片。
@@ -68,6 +72,16 @@ namespace Td.Weixin.Public.Extra
         /// </summary>
         public const int NewsMsg = 10;
 
+
+        /// <summary>
+        /// 发送前不要检查是否已登陆，直接发送。默认为false
+        /// </summary>
+        public bool NoPreLoginCheck { get; set; }
+
+        /// <summary>
+        /// 是否已第一次登陆
+        /// </summary>
+        private bool _inited;
         private bool _logined;
         private readonly string _userName;
         private readonly string _pwd;
@@ -87,6 +101,7 @@ namespace Td.Weixin.Public.Extra
         {
             _userName = userName;
             _pwd = pwd;
+            //NoPreLoginCheck = true;
             _cc = new CookieContainer();
         }
 
@@ -118,6 +133,7 @@ namespace Td.Weixin.Public.Extra
             if (ret.IsSuccess)
             {
                 _token = Regex.Match(ret.ErrMsg, @"(?<=token=)\d+").Value;
+                _inited = true;//已登陆过
             }
             else
             {
@@ -144,6 +160,10 @@ namespace Td.Weixin.Public.Extra
 
         private void PreLogin()
         {
+            if (NoPreLoginCheck && _inited)
+                return;
+
+
             //如果已登陆，探测是否已过期
             if (_logined)
             {
@@ -282,9 +302,7 @@ namespace Td.Weixin.Public.Extra
             PreLogin();
 
             //refer是必须的，否则错误： need post
-            var refer =
-                string.Format(
-                    "https://mp.weixin.qq.com/cgi-bin/singlemsgpage?fromfakeid={0}&count=20&t=wxm-singlechat&token={1}&lang=zh_CN",
+            var refer = string.Format("https://mp.weixin.qq.com/cgi-bin/singlemsgpage?fromfakeid={0}&count=20&t=wxm-singlechat&token={1}&lang=zh_CN",
                     fakeid, _token);
             var dic = new Dictionary<string, object>
             {
@@ -295,13 +313,86 @@ namespace Td.Weixin.Public.Extra
                 {"tofakeid", fakeid},
                 {"token", _token},
                 {"ajax", 1},
-                /*{"fid", 10000003},//后3个文本消息不需要
-                {"fileid", 10000000},
-                {"appmsgid", 10000003}*/
+                {"lang", Language},
+                {"t", "ajax-response"}
             };
-            var r = HttpExtendedHelper.Post<MsgSendResult>(DefaultSendMsg, dic, _cc, refer)
-                ?? new MsgSendResult() { ret = -9999, msg = "未收到微信服务器响应" };
+            var r = GetResponse(DefaultSendMsg, dic, refer);
             return r;
+        }
+
+
+        /// <summary>
+        /// todo:由于发送的是在微信后台预定义的消息，不实用。待寻方案
+        /// </summary>
+        /// <param name="fakeid"></param>
+        /// <param name="news"></param>
+        /// <returns></returns>
+        public MsgSendResult SendSingleNews(string fakeid, PushMsgNewsItem news = null)
+        {
+            //refer是必须的，否则错误： need post
+            var refer = string.Format("https://mp.weixin.qq.com/cgi-bin/singlemsgpage?fromfakeid={0}&count=20&t=wxm-singlechat&token={1}&lang=zh_CN",
+                    fakeid, _token);
+            var dic = new Dictionary<string, object>
+            {
+                {"type", NewsMsg},
+                {"app_id", 10015263},   //图片id。应该是对应于文本消息的 content
+                //{"error", "false"},
+                {"appmsgid", 10015263}, //与图片id相同
+                {"imgcode", ""},
+                {"tofakeid", fakeid},
+                {"token", _token},
+                //{"random", new Random().Next(0,1)},
+                {"ajax", 1},
+                {"f", "json"},
+                {"lang", Language},
+                {"t", "ajax-response"}
+            };
+            var r = GetResponse(DefaultSendMsg, dic, refer);
+            return r;
+        }
+
+        /// <summary>
+        /// 官方群发。一个公众号一天只能发一条。
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public MsgSendSimpleResult SendToAllOverText(string text)
+        {
+            PreLogin();
+
+            //refer是必须的，否则错误： need post
+            var refer = string.Format("https://mp.weixin.qq.com/cgi-bin/masssendpage?t=mass/send&token={0}&lang=zh_CN", _token);
+            var dic = new Dictionary<string, object>
+            {
+                {"type", TextMsg},
+                {"content", text},
+                {"imgcode", ""},
+                {"token", _token},
+                {"sex", 1},//0:所有； 1:男； 2:女
+                {"groupid", -1},//-1为全部组
+                {"country", ""},//空串为全部。值为文字，如"中国"
+                {"province", ""},//空串为全部。值为文字，如"云南"
+                {"city", ""},//空串为全部。值为文字，如"昆明"
+                {"synctxweibo", 0},//
+                {"synctxnews", 0},//
+                {"ajax", 1},
+                {"lang", Language},
+                {"f", "json"},
+                {"t", "ajax-response"}
+            };
+            var r = GetResponse2(DefaultSendToAll, dic, refer);
+            return r;
+        }
+
+        private MsgSendResult GetResponse(string url, Dictionary<string, object> dic, string refer)
+        {
+            return HttpExtendedHelper.Post<MsgSendResult>(url, dic, _cc, refer)
+                   ?? new MsgSendResult() { base_resp = new MsgSendDetail { ret = -9999, err_msg = "未收到微信服务器响应" } };
+        }
+        private MsgSendSimpleResult GetResponse2(string url, Dictionary<string, object> dic, string refer)
+        {
+            return HttpExtendedHelper.Post<MsgSendSimpleResult>(url, dic, _cc, refer)
+                   ?? new MsgSendSimpleResult { ret = -9999, msg = "未收到微信服务器响应" };
         }
     }
 }

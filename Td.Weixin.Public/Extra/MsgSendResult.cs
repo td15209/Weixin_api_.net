@@ -7,11 +7,33 @@
 
 namespace Td.Weixin.Public.Extra
 {
-    public class MsgSendResult
+    public class MsgSendSimpleResult
     {
+
         public int ret { get; set; }
 
         public string msg { get; set; }
+
+        public bool IsSuccess { get { return ret == 0; } }
+    }
+
+    public class MsgSendResult
+    {
+        public MsgSendDetail base_resp { get; set; }
+
+        public bool IsSuccess
+        {
+            get { return base_resp != null && base_resp.IsSuccess; }
+        }
+    }
+
+
+    public class MsgSendDetail
+    {
+
+        public int ret { get; set; }
+
+        public string err_msg { get; set; }
 
         public bool IsSuccess { get { return ret == 0; } }
     }

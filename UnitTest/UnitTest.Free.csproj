@@ -61,11 +61,16 @@
     <Compile Include="CommonTest.cs" />
     <Compile Include="CrawlerTest.cs" />
     <Compile Include="CredentialTest.cs" />
+    <Compile Include="GroupTest.cs" />
     <Compile Include="HtmlParserTest.cs" />
+    <Compile Include="MediaTest.cs" />
     <Compile Include="MenuTest.cs" />
     <Compile Include="MsgTest.cs" />
     <Compile Include="NewsDataTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PushMsgOfficialTest .cs" />
+    <Compile Include="QrCodeTest.cs" />
+    <Compile Include="UserTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
