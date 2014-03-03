@@ -11,13 +11,13 @@ using System.Web;
 namespace Td.Weixin.Public.Message
 {
     /// <summary>
-    /// 响应消息
+    ///     响应消息
     /// </summary>
     public class ResponseMessage : Message
     {
         public ResponseMessage()
         {
-            CreateTime = (int)(DateTime.Now - DateTime.Parse("1970-1-1")).TotalSeconds;
+            CreateTime = (int) (DateTime.Now - DateTime.Parse("1970-1-1")).TotalSeconds;
         }
 
         public RepMsgData Data { get; set; }
@@ -33,7 +33,7 @@ namespace Td.Weixin.Public.Message
         }
 
         /// <summary>
-        /// 将响应写入响应流。
+        ///     将响应写入响应流。
         /// </summary>
         /// <param name="end">如果为true，调用response.End()方法</param>
         public void Response(bool end = true)
@@ -49,7 +49,7 @@ namespace Td.Weixin.Public.Message
     }
 
     /// <summary>
-    /// 响应消息数据
+    ///     响应消息数据
     /// </summary>
     public abstract class RepMsgData
     {

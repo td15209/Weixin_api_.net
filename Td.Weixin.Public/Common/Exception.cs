@@ -28,10 +28,10 @@ namespace Td.Weixin.Public.Common
         public string ErrMsg { get; private set; }
 
         /// <summary>
-        /// 获取描述当前异常的消息。
+        ///     获取描述当前异常的消息。
         /// </summary>
         /// <returns>
-        /// 解释异常原因的错误消息或空字符串 ("")。
+        ///     解释异常原因的错误消息或空字符串 ("")。
         /// </returns>
         public override string Message
         {

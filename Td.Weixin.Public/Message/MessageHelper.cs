@@ -18,7 +18,7 @@ namespace Td.Weixin.Public.Message
     public class MessageHelper
     {
         /// <summary>
-        /// 将指定对象的带[Output]标识的属性序列化为xml文本
+        ///     将指定对象的带[Output]标识的属性序列化为xml文本
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
@@ -28,7 +28,7 @@ namespace Td.Weixin.Public.Message
         }
 
         /// <summary>
-        /// 将指定对象的指定属性列表序列化为xml文本。
+        ///     将指定对象的指定属性列表序列化为xml文本。
         /// </summary>
         /// <param name="obj"></param>
         /// <param name="ps"></param>
@@ -48,13 +48,13 @@ namespace Td.Weixin.Public.Message
             {
                 writer.WriteStartElement(p.Name);
                 //字符串返回CDATA节点
-                if (p.PropertyType == typeof(string))
+                if (p.PropertyType == typeof (string))
                 {
                     writer.WriteCData(Convert.ToString(p.GetValue(obj, null)));
                 }
-                else if (p.PropertyType == typeof(MessageType))
+                else if (p.PropertyType == typeof (MessageType))
                 {
-                    writer.WriteCData(MessageTypeAttribute.ObtainMessageType((MessageType)p.GetValue(obj, null)));
+                    writer.WriteCData(MessageTypeAttribute.ObtainMessageType((MessageType) p.GetValue(obj, null)));
                 }
                 else
                 {
@@ -68,13 +68,14 @@ namespace Td.Weixin.Public.Message
         }
 
         /// <summary>
-        /// 获取指定对象的带[Output]标识的属性列表
+        ///     获取指定对象的带[Output]标识的属性列表
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
         public static IEnumerable<PropertyInfo> GetOutputPropertyInfos(object obj)
         {
-            var ps = obj.GetType().GetProperties().Where(p => p.GetCustomAttributes(typeof(OutputAttribute), true).Any());
+            var ps =
+                obj.GetType().GetProperties().Where(p => p.GetCustomAttributes(typeof (OutputAttribute), true).Any());
             return ps;
         }
     }

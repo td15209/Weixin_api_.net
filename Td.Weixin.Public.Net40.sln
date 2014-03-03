@@ -24,7 +24,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WeixinWebTest", "WeixinWebT
 		SlnRelativePath = "WeixinWebTest\"
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Td.Weixin.Public.Free", "Td.Weixin.Public\Td.Weixin.Public.Free.csproj", "{B0C87F3B-7C5D-480F-980E-6CCB1098EED0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Td.Weixin.Public", "Td.Weixin.Public\Td.Weixin.Public.csproj", "{B0C87F3B-7C5D-480F-980E-6CCB1098EED0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest.Free", "UnitTest\UnitTest.Free.csproj", "{7FF3B551-E288-4DA4-8D1E-E5895038EE5A}"
 EndProject

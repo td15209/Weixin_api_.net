@@ -11,24 +11,24 @@ using Newtonsoft.Json;
 namespace Td.Weixin.Public.Common
 {
     /// <summary>
-    /// 微信基本的响应结构
+    ///     微信基本的响应结构
     /// </summary>
     public class BasicResult
     {
         /// <summary>
-        /// 结果码
+        ///     结果码
         /// </summary>
         [JsonProperty(PropertyName = "errcode")]
         public int ErrCode { get; set; }
 
         /// <summary>
-        /// 结果文本说明
+        ///     结果文本说明
         /// </summary>
         [JsonProperty(PropertyName = "errmsg")]
         public string ErrMsg { get; set; }
 
         /// <summary>
-        /// 是否成功
+        ///     是否成功
         /// </summary>
         public bool IsSuccess
         {
@@ -37,7 +37,7 @@ namespace Td.Weixin.Public.Common
 
         public static BasicResult GetSuccess(string msg = null)
         {
-            return new BasicResult { ErrCode = 0, ErrMsg = msg ?? "完成" };
+            return new BasicResult {ErrCode = 0, ErrMsg = msg ?? "完成"};
         }
 
         public static BasicResult GetFailed(string msg, Exception ex = null)

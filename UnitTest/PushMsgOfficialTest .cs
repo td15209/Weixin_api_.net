@@ -4,7 +4,9 @@ using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using Td.Weixin.Public.Common;
+using Td.Weixin.Public.Common;
 using Td.Weixin.Public.Extra;
+using Td.Weixin.Public.Extra.Models;
 
 namespace UnitTest
 {
@@ -25,7 +27,7 @@ namespace UnitTest
                     }
                 }";
 
-            var ret = JsonConvert.DeserializeObject<PushTextMessage>(json);
+            var ret = JsonConvert.DeserializeObject<TextMessageForPush>(json);
 
             Debug.WriteLine(ret);
 
@@ -44,7 +46,7 @@ namespace UnitTest
                         }
                     }";
 
-            var ret = JsonConvert.DeserializeObject<PushImageMessage>(json);
+            var ret = JsonConvert.DeserializeObject<ImageMessageForPush>(json);
 
             Debug.WriteLine(ret);
 
@@ -64,7 +66,7 @@ namespace UnitTest
                         }
                     }";
 
-            var ret = JsonConvert.DeserializeObject<PushVoiceMessage>(json);
+            var ret = JsonConvert.DeserializeObject<VoiceMessageForPush>(json);
 
             Debug.WriteLine(ret);
 
@@ -85,7 +87,7 @@ namespace UnitTest
                         }
                     }";
 
-            var ret = JsonConvert.DeserializeObject<PushVideoMessage>(json);
+            var ret = JsonConvert.DeserializeObject<VideoMessageForPush>(json);
 
             Debug.WriteLine(ret);
 
@@ -108,7 +110,7 @@ namespace UnitTest
                         }
                     }";
 
-            var ret = JsonConvert.DeserializeObject<PushMusicMessage>(json);
+            var ret = JsonConvert.DeserializeObject<MusicMessageForPush>(json);
 
             Debug.WriteLine(ret);
 
@@ -139,7 +141,7 @@ namespace UnitTest
                         }
                     }";
 
-            var ret = JsonConvert.DeserializeObject<PushNewsMessage>(json);
+            var ret = JsonConvert.DeserializeObject<NewsMessageForPush>(json);
 
             Debug.WriteLine(ret);
 
@@ -157,7 +159,7 @@ namespace UnitTest
             }
 
             //文本消息
-            var msg = new PushTextMessage()
+            var msg = new TextMessageForPush()
             {
                 ToUser = "oaKZbtyB06l2QpTX6loCNYfoHD9A",
                 Text = "你好"
@@ -178,7 +180,7 @@ namespace UnitTest
             }
 
             //图片消息
-            var msg = new PushImageMessage()
+            var msg = new ImageMessageForPush()
             {
                 ToUser = "oaKZbtyB06l2QpTX6loCNYfoHD9A",
                 Image = "mLtXk9ttRQaWBC0Cjzg24ZXtx0mcSInMcssLCWi2qbpUSuWbkeCYumwMkmZPtFz-" //可以直接设置图片id
@@ -199,24 +201,24 @@ namespace UnitTest
             }
 
             //图片图文
-            var news = new PushMsgNewsData();//定义图片内容
-            news.Articles.AddRange(new List<PushMsgNewsItem>
+            var news = new NewsMsgDataForPush();//定义图片内容
+            news.Articles.AddRange(new List<NewsMsgDataItemForPush>
                 {
-                    new PushMsgNewsItem()
+                    new NewsMsgDataItemForPush()
                     {
                         Description = "这是描述",
                         PicUrl = "http://blog.tecd.pw/wp-content/uploads/http://bcs.duapp.com/td-bucket//blog/201309//QQ%E5%9B%BE%E7%89%8720130914160223.jpg",
                         Title = "这是标题",
                         Url = "http://blog.tecd.pw"
                     },
-                    new PushMsgNewsItem()
+                    new NewsMsgDataItemForPush()
                     {
                         Description = "这是描述",
                         PicUrl = "http://blog.tecd.pw/wp-content/uploads/http://bcs.duapp.com/td-bucket//blog/201309//QQ%E5%9B%BE%E7%89%8720130914160223.jpg",
                         Title = "这是标题",
                         Url = "http://blog.tecd.pw"
                     },
-                    new PushMsgNewsItem()
+                    new NewsMsgDataItemForPush()
                     {
                         Description = "这是描述",
                         PicUrl = "http://blog.tecd.pw/wp-content/uploads/http://bcs.duapp.com/td-bucket//blog/201309//QQ%E5%9B%BE%E7%89%8720130914160223.jpg",
@@ -224,7 +226,7 @@ namespace UnitTest
                         Url = "http://blog.tecd.pw"
                     },
                 });
-            var msg = new PushNewsMessage()
+            var msg = new NewsMessageForPush()
             {
                 ToUser = "oaKZbtyB06l2QpTX6loCNYfoHD9A",
                 News = news

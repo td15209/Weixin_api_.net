@@ -36,11 +36,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Numerics" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -53,16 +50,37 @@
     <Compile Include="Common\SellerContext.cs" />
     <Compile Include="Common\SellerObtainer.cs" />
     <Compile Include="Common\UserContext.cs" />
-    <Compile Include="Extra\Group.cs" />
-    <Compile Include="Extra\GroupManager.cs" />
-    <Compile Include="Extra\MediaManager.cs" />
-    <Compile Include="Extra\MessagePusher.cs" />
-    <Compile Include="Extra\OfficialUser.cs" />
-    <Compile Include="Extra\PushMessage.cs" />
-    <Compile Include="Extra\PushMessageData.cs" />
-    <Compile Include="Extra\PushMessageSub.cs" />
-    <Compile Include="Extra\QrCode.cs" />
-    <Compile Include="Extra\UserManager.cs" />
+    <Compile Include="Extra\Crawler.cs" />
+    <Compile Include="Extra\ModelsFree\CommonResult.cs" />
+    <Compile Include="Extra\ModelsFree\WxGroup.cs" />
+    <Compile Include="Extra\Models\QrCode.cs" />
+    <Compile Include="Extra\Models\WxGroup.cs" />
+    <Compile Include="Extra\GroupManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extra\ModelsFree\LoginResult.cs" />
+    <Compile Include="Extra\MediaManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extra\MessagePusher.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extra\ModelsFree\UserInfoJsonListResult.cs" />
+    <Compile Include="Extra\ModelsFree\MsgSendResult.cs" />
+    <Compile Include="Extra\Models\WxUserDetail.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extra\Models\MessageForPush.cs" />
+    <Compile Include="Extra\Models\MessageForPushData.cs" />
+    <Compile Include="Extra\Models\MessageForPushSub.cs" />
+    <Compile Include="Extra\QrCodeManager.cs" />
+    <Compile Include="Extra\UserManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Extra\ModelsFree\WxUserInfo.cs" />
+    <Compile Include="Extra\ModelsFree\WxUserDetail.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Message\IMessageHandler.cs" />
     <Compile Include="Message\Message.cs" />
     <Compile Include="Message\MessageHelper.cs" />

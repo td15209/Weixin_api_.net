@@ -19,22 +19,22 @@ using System.Xml.Linq;
 namespace Td.Weixin.Public.Message
 {
     /// <summary>
-    /// 接收的消息
+    ///     接收的消息
     /// </summary>
     public class ReceiveMessage : Message
     {
         /// <summary>
-        /// 消息id
+        ///     消息id
         /// </summary>
         [Output]
         public long MsgId { get; set; }
 
-
         #region 静态方法
 
+        private static IMessageHandler _messageHandler;
 
         /// <summary>
-        /// 从xml文件解析消息。
+        ///     从xml文件解析消息。
         /// </summary>
         /// <param name="text"></param>
         /// <returns></returns>
@@ -47,7 +47,7 @@ namespace Td.Weixin.Public.Message
         }
 
         /// <summary>
-        /// 从HttpContext中获取信息并解析
+        ///     从HttpContext中获取信息并解析
         /// </summary>
         /// <returns></returns>
         public static ReceiveMessage ParseFromContext()
@@ -60,7 +60,7 @@ namespace Td.Weixin.Public.Message
         }
 
         /// <summary>
-        /// 为了简单，直接使用switch
+        ///     为了简单，直接使用switch
         /// </summary>
         /// <param name="text"></param>
         /// <returns></returns>
@@ -85,10 +85,8 @@ namespace Td.Weixin.Public.Message
         }
 
 
-        private static IMessageHandler _messageHandler;
-
         /// <summary>
-        /// 注册消息处理程序。当收到消息是后执行相应的方法。
+        ///     注册消息处理程序。当收到消息是后执行相应的方法。
         /// </summary>
         /// <param name="handler"></param>
         public static void ResisterHandler(IMessageHandler handler)
@@ -99,7 +97,7 @@ namespace Td.Weixin.Public.Message
         #endregion
 
         /// <summary>
-        /// 从接收到的消息中获取信息以填充到响应消息中。
+        ///     从接收到的消息中获取信息以填充到响应消息中。
         /// </summary>
         /// <param name="msg"></param>
         private void FillRepMsg(ResponseMessage msg)
@@ -109,19 +107,19 @@ namespace Td.Weixin.Public.Message
         }
 
         /// <summary>
-        /// 获取文本响应消息
+        ///     获取文本响应消息
         /// </summary>
         /// <returns></returns>
         public RepTextMessage GetTextResponse(string text = null)
         {
             var ret = new RepTextMessage();
             FillRepMsg(ret);
-            ret.Data = (TextMsgData)text;
+            ret.Data = (TextMsgData) text;
             return ret;
         }
 
         /// <summary>
-        /// 获取音乐响应消息
+        ///     获取音乐响应消息
         /// </summary>
         public RepMusicMessage GetMusicResponse()
         {
@@ -131,7 +129,7 @@ namespace Td.Weixin.Public.Message
         }
 
         /// <summary>
-        /// 获取图文响应消息
+        ///     获取图文响应消息
         /// </summary>
         /// <returns></returns>
         public RepNewsMessage GetNewsResponse(IEnumerable<NewsItem> data = null)
@@ -148,8 +146,8 @@ namespace Td.Weixin.Public.Message
         }
 
         /// <summary>
-        /// （调用已经定义的消息处理程序）处理消息
-        /// <para>注意，请不要在接口IMessageHandler的实现方法内再次调用，这样可能会导致死循环。</para>
+        ///     （调用已经定义的消息处理程序）处理消息
+        ///     <para>注意，请不要在接口IMessageHandler的实现方法内再次调用，这样可能会导致死循环。</para>
         /// </summary>
         /// <returns></returns>
         public ResponseMessage Process()
@@ -173,6 +171,5 @@ namespace Td.Weixin.Public.Message
 
             return ret;
         }
-
     }
 }

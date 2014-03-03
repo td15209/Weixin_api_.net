@@ -12,14 +12,13 @@ namespace Td.Weixin.Public.Plugin
     public class HelpPlugin : TextPlugin
     {
         /// <summary>
-        /// 默认匹配。可匹配关键字“帮助”，“help”，“h”。英文不区分大小写。
+        ///     默认匹配。可匹配关键字“帮助”，“help”，“h”。英文不区分大小写。
         /// </summary>
         public const string DefaultPattern = @"^\s*帮助|help|h\s*$";
 
         private bool _asDefault;
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="pattern"></param>
         /// <param name="asDefault">是否作为转为插件，处理所有消息</param>

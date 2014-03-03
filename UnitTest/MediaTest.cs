@@ -8,6 +8,7 @@
 using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Td.Weixin.Public.Common;
+using Td.Weixin.Public.Common;
 using Td.Weixin.Public.Extra;
 
 namespace UnitTest

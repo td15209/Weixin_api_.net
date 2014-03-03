@@ -16,20 +16,24 @@ namespace Td.Weixin.Public.Common
         public static string CreateUrlDefault = "https://api.weixin.qq.com/cgi-bin/menu/create";
 
         /// <summary>
-        /// 查询菜单接口地址
+        ///     查询菜单接口地址
         /// </summary>
         public static string QueryUrlDefault = "https://api.weixin.qq.com/cgi-bin/menu/get";
 
         /// <summary>
-        /// 删除菜单接口地址
+        ///     删除菜单接口地址
         /// </summary>
         public static string DeleteUrlDefault = "https://api.weixin.qq.com/cgi-bin/menu/delete";
 
         public string AccessToken { get; set; }
 
+        public string CreateUrl { get; set; }
+        public string QueryUrl { get; set; }
+        public string DeleteUrl { get; set; }
+
         /// <summary>
-        /// 获取默认的MenuHelper。
-        /// 此实例设置了默认Url并（在传递null时）读取缓存的access_token
+        ///     获取默认的MenuHelper。
+        ///     此实例设置了默认Url并（在传递null时）读取缓存的access_token
         /// </summary>
         /// <returns></returns>
         public static MenuHelper Create(string accessToken = null)
@@ -44,32 +48,28 @@ namespace Td.Weixin.Public.Common
             return ret;
         }
 
-        public string CreateUrl { get; set; }
-        public string QueryUrl { get; set; }
-        public string DeleteUrl { get; set; }
-
         /// <summary>
-        /// 创建菜单
+        ///     创建菜单
         /// </summary>
         /// <param name="menu"></param>
         /// <returns></returns>
         public BasicResult CreateMenu(Menu menu)
         {
             var hh = new HttpHelper(CreateUrl);
-            var r = hh.Post<BasicResult>(menu.ToString(), new FormData { { "access_token", AccessToken } });
+            var r = hh.Post<BasicResult>(menu.ToString(), new FormData {{"access_token", AccessToken}});
 
             return r;
         }
 
         /// <summary>
-        /// 查询菜单
+        ///     查询菜单
         /// </summary>
         /// <returns></returns>
         public Menu QueryMenu()
         {
             var hh = new HttpHelper(QueryUrl);
-            var oo = new { menu = new Menu() };
-            var json = hh.GetString(new FormData { { "access_token", AccessToken } });
+            var oo = new {menu = new Menu()};
+            var json = hh.GetString(new FormData {{"access_token", AccessToken}});
             var or = JsonConvert.DeserializeAnonymousType(json, oo);
             var ret = or.menu;
             if (ret == null)
@@ -81,18 +81,18 @@ namespace Td.Weixin.Public.Common
         }
 
         /// <summary>
-        /// 取消当前使用的自定义菜单
+        ///     取消当前使用的自定义菜单
         /// </summary>
         public BasicResult DeleteMenu()
         {
             var hh = new HttpHelper(DeleteUrl);
-            var r = hh.Get<BasicResult>(new FormData { { "access_token", AccessToken } });
+            var r = hh.Get<BasicResult>(new FormData {{"access_token", AccessToken}});
             return r;
         }
     }
 
     /// <summary>
-    /// 菜单结构
+    ///     菜单结构
     /// </summary>
     public class Menu
     {
@@ -106,24 +106,24 @@ namespace Td.Weixin.Public.Common
 
         public override string ToString()
         {
-            var settings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
+            var settings = new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore};
             return JsonConvert.SerializeObject(this, settings);
         }
     }
 
     /// <summary>
-    /// 表示一个button
+    ///     表示一个button
     /// </summary>
     public class MenuItem
     {
         /// <summary>
-        /// 用户点击click类型按钮后，微信服务器会通过消息接口(event类型)推送点击事件给开发者，
-        /// 并且带上按钮中开发者填写的key值，开发者可以通过自定义的key值进行消息回复
+        ///     用户点击click类型按钮后，微信服务器会通过消息接口(event类型)推送点击事件给开发者，
+        ///     并且带上按钮中开发者填写的key值，开发者可以通过自定义的key值进行消息回复
         /// </summary>
         public const string Click = "click";
 
         /// <summary>
-        /// 用户点击view类型按钮后，会直接跳转到开发者指定的url中
+        ///     用户点击view类型按钮后，会直接跳转到开发者指定的url中
         /// </summary>
         public const string View = "view";
 
@@ -134,13 +134,13 @@ namespace Td.Weixin.Public.Common
         public string Name { get; set; }
 
         /// <summary>
-        /// 类型。从常量中获取
+        ///     类型。从常量中获取
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
 
         /// <summary>
-        /// view button 的url地址
+        ///     view button 的url地址
         /// </summary>
         [JsonProperty(PropertyName = "url")]
         public string Url { get; set; }

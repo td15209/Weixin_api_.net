@@ -10,7 +10,7 @@ using System.CodeDom;
 namespace Td.Weixin.Public.Message
 {
     /// <summary>
-    /// （响应）文件消息
+    ///     （响应）文件消息
     /// </summary>
     public class RepTextMessage : ResponseMessage
     {
@@ -21,7 +21,7 @@ namespace Td.Weixin.Public.Message
     }
 
     /// <summary>
-    /// （响应）音乐消息
+    ///     （响应）音乐消息
     /// </summary>
     public class RepMusicMessage : ResponseMessage
     {
@@ -32,7 +32,7 @@ namespace Td.Weixin.Public.Message
     }
 
     /// <summary>
-    /// （响应）图文消息
+    ///     （响应）图文消息
     /// </summary>
     public class RepNewsMessage : ResponseMessage
     {

@@ -6,7 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Td.Weixin.Public.Common;
+using Td.Weixin.Public.Common;
 using Td.Weixin.Public.Extra;
+using Td.Weixin.Public.Extra.Models;
 
 namespace UnitTest
 {
@@ -99,7 +101,7 @@ namespace UnitTest
             //var ret = UserManager.Default.MoveUserTo(_openid, 101);
 
             //方式2、如果已经获取到用户，可以以另一种方式移动
-            var user = new WxUserInfo() { openid = _openid };//模拟获取一个用户
+            var user = new WxUserDetail() { openid = _openid };//模拟获取一个用户
             var ret = user.MoveTo(101);
 
             Debug.WriteLine(ret.ErrMsg);

@@ -6,7 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Td.Weixin.Public.Common;
+using Td.Weixin.Public.Common;
 using Td.Weixin.Public.Extra;
+using Td.Weixin.Public.Extra.Models;
 
 namespace UnitTest
 {
@@ -26,7 +28,7 @@ namespace UnitTest
                 var ret = QrCodeManager.Default.Create(new QrCode
                 {
                     action_name = QrCode.Temporary,
-                    action_info = new Action_Info { scene = new Scene { scene_id = 200 } },
+                    action_info = new QrCodeActionInfo() { scene = new QrCodeScene(){ scene_id = 200 } },
                     expire_seconds = 1800
                 });
 

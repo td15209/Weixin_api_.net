@@ -12,8 +12,8 @@ using Td.Weixin.Public.Message;
 namespace Td.Weixin.Public.Plugin
 {
     /// <summary>
-    /// 处理文本消息的插件基类。
-    /// <para>继承自类不是只能处理文本消息的，此类只用于为文本消息提供一些通用的处理逻辑。</para>
+    ///     处理文本消息的插件基类。
+    ///     <para>继承自类不是只能处理文本消息的，此类只用于为文本消息提供一些通用的处理逻辑。</para>
     /// </summary>
     public class TextPlugin : Plugin
     {

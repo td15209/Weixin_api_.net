@@ -19,54 +19,39 @@ namespace Td.Weixin.Public.Common
         private static string _accessToken;
 
         /// <summary>
-        /// 多access_token缓存（根据appid），满足一个服务器服务于多个微信公号的需求。
+        ///     多access_token缓存（根据appid），满足一个服务器服务于多个微信公号的需求。
         /// </summary>
-        private readonly static Dictionary<string, string> MultiTokenCache = new Dictionary<string, string>();
+        private static readonly Dictionary<string, string> MultiTokenCache = new Dictionary<string, string>();
 
         /// <summary>
-        /// 获取缓存的（最后一次获取的）AccessToken。
-        /// 注意，即使缓存的token已过期或不存在也不会获取新AccessToken。
+        ///     获取缓存的（最后一次获取的）AccessToken。
+        ///     注意，即使缓存的token已过期或不存在也不会获取新AccessToken。
         /// </summary>
         public static string CachedAccessToken
         {
-            get
-            {
-                return _accessToken;
-            }
+            get { return _accessToken; }
         }
 
         /// <summary>
-        /// 移除缓存的token
-        /// </summary>
-        /// <param name="appId"></param>
-        public static void RemoveCache(string appId)
-        {
-            MultiTokenCache.Remove(appId);
-        }
-
-        /// <summary>
-        /// 获取access_token填写client_credential
+        ///     获取access_token填写client_credential
         /// </summary>
         public string GrantType
         {
-            get
-            {
-                return "client_credential";
-            }
+            get { return "client_credential"; }
         }
 
         /// <summary>
-        /// 第三方用户唯一凭证
+        ///     第三方用户唯一凭证
         /// </summary>
         public string Appid { get; set; }
 
         /// <summary>
-        /// 第三方用户唯一凭证密钥，既appsecret
+        ///     第三方用户唯一凭证密钥，既appsecret
         /// </summary>
         public string Secret { get; set; }
 
         /// <summary>
-        /// 获取access_token。会缓存，过期后自动重新获取新的token。
+        ///     获取access_token。会缓存，过期后自动重新获取新的token。
         /// </summary>
         public string AccessToken
         {
@@ -77,13 +62,13 @@ namespace Td.Weixin.Public.Common
                     var helper = GetHelper();
                     var ret = helper.Get<CredentialResult>(new FormData
                     {
-                       { "grant_type",GrantType},
-                       { "appid",Appid},
-                       { "secret",Secret},
+                        {"grant_type", GrantType},
+                        {"appid", Appid},
+                        {"secret", Secret},
                     });
 
                     _accessToken = ret.access_token;
-                    MultiTokenCache[Appid] = _accessToken;//缓存
+                    MultiTokenCache[Appid] = _accessToken; //缓存
 
                     if (ret.IsSuccess)
                     {
@@ -93,15 +78,24 @@ namespace Td.Weixin.Public.Common
                         {
                             MultiTokenCache.Remove(curAppid);
                             autoEvent.Set();
-                        }, autoEvent, (ret.expires_in - 3)/*避免时间误差*/ * 1000, Timeout.Infinite);
+                        }, autoEvent, (ret.expires_in - 3) /*避免时间误差*/*1000, Timeout.Infinite);
                         timer.Dispose(autoEvent);
                     }
                 }
 
-                _accessToken = MultiTokenCache[Appid];//2013-11-28 修复bug：Appid变化后，仍然获取上个成功的access_token
+                _accessToken = MultiTokenCache[Appid]; //2013-11-28 修复bug：Appid变化后，仍然获取上个成功的access_token
 
                 return _accessToken;
             }
+        }
+
+        /// <summary>
+        ///     移除缓存的token
+        /// </summary>
+        /// <param name="appId"></param>
+        public static void RemoveCache(string appId)
+        {
+            MultiTokenCache.Remove(appId);
         }
 
         private HttpHelper GetHelper()
@@ -111,7 +105,7 @@ namespace Td.Weixin.Public.Common
         }
 
         /// <summary>
-        /// 获取配置文件中的凭证信息并填充到Credential实例
+        ///     获取配置文件中的凭证信息并填充到Credential实例
         /// </summary>
         /// <returns></returns>
         public static Credential Create()
@@ -124,39 +118,36 @@ namespace Td.Weixin.Public.Common
     }
 
     /// <summary>
-    /// 获取凭证时的响应数据
+    ///     获取凭证时的响应数据
     /// </summary>
     public class CredentialResult
     {
         /// <summary>
-        /// 获取到的凭证
+        ///     获取到的凭证
         /// </summary>
         public string access_token { get; set; }
 
         /// <summary>
-        /// 凭证有效时间，单位：秒
+        ///     凭证有效时间，单位：秒
         /// </summary>
         public int expires_in { get; set; }
 
         /// <summary>
-        /// 错误信息号
+        ///     错误信息号
         /// </summary>
         public int errcode { get; set; }
 
         /// <summary>
-        /// 错误消息文本
+        ///     错误消息文本
         /// </summary>
         public string errmsg { get; set; }
 
         /// <summary>
-        /// 是否成功
+        ///     是否成功
         /// </summary>
         public bool IsSuccess
         {
-            get
-            {
-                return !string.IsNullOrEmpty(access_token);
-            }
+            get { return !string.IsNullOrEmpty(access_token); }
         }
     }
 }

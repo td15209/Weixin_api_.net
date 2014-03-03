@@ -6,16 +6,15 @@
 *******************************/
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Td.Weixin.Public.Common;
+using Td.Weixin.Public.Extra.Models;
 
 namespace Td.Weixin.Public.Extra
 {
+    /// <summary>
+    ///     用于使用官方接口处理用户信息
+    /// </summary>
     public class UserManager
     {
         public const string DefaultUserListUrl = "https://api.weixin.qq.com/cgi-bin/user/get";
@@ -24,21 +23,6 @@ namespace Td.Weixin.Public.Extra
 
         public const string DefaultMoveUserUrl = "https://api.weixin.qq.com/cgi-bin/groups/members/update";
 
-        /// <summary>
-        /// 使用默认接口地址和缓存的accesstoken初始化实例.
-        /// </summary>
-        public static UserManager Default
-        {
-            get { return new UserManager(Credential.CachedAccessToken); }
-        }
-        public string AccessToken { get; set; }
-
-        /// <summary>
-        /// 关注者列表
-        /// </summary>
-        public string UserListUrl { get; set; }
-        public string UserInfoUrl { get; set; }
-        public string UserUpdateUrl { get; set; }
         public UserManager(string accessToken)
         {
             AccessToken = accessToken;
@@ -48,8 +32,26 @@ namespace Td.Weixin.Public.Extra
         }
 
         /// <summary>
-        /// 获取第一页（前10000用户）。
-        /// 如果需要更多，请使用回调。
+        ///     使用默认接口地址和缓存的accesstoken初始化实例.
+        /// </summary>
+        public static UserManager Default
+        {
+            get { return new UserManager(Credential.CachedAccessToken); }
+        }
+
+        public string AccessToken { get; set; }
+
+        /// <summary>
+        ///     关注者列表
+        /// </summary>
+        public string UserListUrl { get; set; }
+
+        public string UserInfoUrl { get; set; }
+        public string UserUpdateUrl { get; set; }
+
+        /// <summary>
+        ///     获取第一页（前10000用户）。
+        ///     如果需要更多，请使用回调。
         /// </summary>
         /// <returns></returns>
         public WxUserListResult GetFirstPageUserList()
@@ -68,14 +70,14 @@ namespace Td.Weixin.Public.Extra
         }
 
         /// <summary>
-        /// 分页获取用户列表。
-        /// 注意：此方法是同步调用。
+        ///     分页获取用户列表。
+        ///     注意：此方法是同步调用。
         /// </summary>
         /// <param name="callback">回调函数。参数1：用户列表； 参数2：第1开始的当前页索引</param>
         public void GetUserList(Action<WxUserListResult, int> callback)
         {
             var nextOpenid = string.Empty;
-            const int pageSize = 10000;//
+            const int pageSize = 10000; //
             var currentPage = 1;
             WxUserListResult ret;
             do
@@ -94,15 +96,15 @@ namespace Td.Weixin.Public.Extra
 
                 currentPage++;
                 nextOpenid = ret.next_openid;
-            } while (ret.total > pageSize * currentPage);
+            } while (ret.total > pageSize*currentPage);
         }
 
         /// <summary>
-        /// 关注者基本信息
+        ///     关注者基本信息
         /// </summary>
         /// <param name="openid"></param>
         /// <returns></returns>
-        public WxUserInfo GetUserInfo(string openid)
+        public WxUserDetail GetUserInfo(string openid)
         {
             var s = new HttpHelper(UserInfoUrl).GetString(new FormData
             {
@@ -110,7 +112,7 @@ namespace Td.Weixin.Public.Extra
                 {"openid", openid}
             });
 
-            var ret = JsonConvert.DeserializeObject<WxUserInfo>(s);
+            var ret = JsonConvert.DeserializeObject<WxUserDetail>(s);
             if (ret.openid == null)
                 throw new WxException(JsonConvert.DeserializeObject<BasicResult>(s));
 
@@ -118,14 +120,14 @@ namespace Td.Weixin.Public.Extra
         }
 
         /// <summary>
-        /// 将用户移动到指定分组
+        ///     将用户移动到指定分组
         /// </summary>
         /// <param name="openid"></param>
         /// <param name="groupId"></param>
         /// <returns></returns>
         public BasicResult MoveUserTo(string openid, int groupId)
         {
-            var ao = new { openid = openid, to_groupid = groupId };
+            var ao = new {openid, to_groupid = groupId};
             var s = new HttpHelper(UserUpdateUrl).PostString(JsonConvert.SerializeObject(ao), new FormData
             {
                 {"access_token", AccessToken}
