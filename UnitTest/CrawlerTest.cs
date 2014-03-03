@@ -20,7 +20,7 @@ namespace UnitTest
     public class CrawlerTest
     {
         private string username = "chendong2qq.com@qq.com";
-        private string pwd = "wobuzd";
+        private string pwd = "";
 
 
         /// <summary>
