@@ -93,7 +93,7 @@
     <Compile Include="Plugin\HelpPlugin.cs" />
     <Compile Include="Plugin\Invoker.cs" />
     <Compile Include="Plugin\InvokerContext.cs" />
-    <Compile Include="Plugin\InvokingContext.cs" />
+    <Compile Include="Plugin\PluginInvokingContext.cs" />
     <Compile Include="Plugin\MenuKeyPlugin.cs" />
     <Compile Include="Plugin\Plugin.cs" />
     <Compile Include="Plugin\PluginContext.cs" />
