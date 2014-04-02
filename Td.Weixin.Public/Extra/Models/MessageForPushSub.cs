@@ -1,11 +1,4 @@
-﻿/*******************************
- *	Author:	Dong[http://blog.tecd.pw] [mailto:techdong@hotmail.com] 欢迎交流 Q群：289147891
- *	Date:	$date$
- *	Desc:	官方接口推送的消息的具体类
- * 
-*******************************/
-
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Td.Weixin.Public.Extra.Models
 {

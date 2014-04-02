@@ -1,13 +1,4 @@
-﻿/*******************************
- *	Author:	Dong [mailto:techdong@hotmail.com] 欢迎交流 Q群：289147891
- *	Date:	2013-09-04 15:45:39
- *	Desc:	
- * 
-*******************************/
-
-using System.CodeDom;
-
-namespace Td.Weixin.Public.Message
+﻿namespace Td.Weixin.Public.Message
 {
     /// <summary>
     ///     （响应）文件消息

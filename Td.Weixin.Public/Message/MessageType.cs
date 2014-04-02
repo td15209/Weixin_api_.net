@@ -1,11 +1,4 @@
-﻿/*******************************
- *	Author:	Dong [mailto:techdong@hotmail.com]
- *	Date:	2013-09-04 13:20:48
- *	Desc:	
- * 
-*******************************/
-
-using System;
+﻿using System;
 using System.Linq;
 
 namespace Td.Weixin.Public.Message

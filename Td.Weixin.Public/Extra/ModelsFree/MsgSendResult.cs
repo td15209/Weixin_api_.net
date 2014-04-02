@@ -1,12 +1,4 @@
-﻿/*******************************
- *	Author:	Dong[http://blog.tecd.pw] [mailto:techdong@hotmail.com] 欢迎交流 Q群：289147891
- *	Date:	2013-09-15 17:37:31
- *	
- *	Desc:	消息模拟发送时的响应结构。有两种结构。
- * 
-*******************************/
-
-namespace Td.Weixin.Public.Extra.ModelsFree
+﻿namespace Td.Weixin.Public.Extra.ModelsFree
 {
     /// <summary>
     ///     模拟群发消息时的响应结构

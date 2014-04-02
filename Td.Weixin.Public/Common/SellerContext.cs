@@ -1,11 +1,4 @@
-﻿/*******************************
- *	Author:	Dong[http://blog.tecd.pw] [mailto:techdong@hotmail.com] 欢迎交流 Q群：289147891
- *	Date:	2013-09-13 22:17:42
- *	Desc:	
- * 
-*******************************/
-
-namespace Td.Weixin.Public.Common
+﻿namespace Td.Weixin.Public.Common
 {
     /// <summary>
     ///     商家信息。接入平台的拥有微信公号的商家的相关信息。

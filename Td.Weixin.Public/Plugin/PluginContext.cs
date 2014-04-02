@@ -1,11 +1,4 @@
-﻿/*******************************
- *	Author:	Dong[http://blog.tecd.pw] [mailto:techdong@hotmail.com] 欢迎交流 Q群：289147891
- *	Date:	2013-09-13 21:23:11
- *	Desc:	
- * 
-*******************************/
-
-using Td.Weixin.Public.Common;
+﻿using Td.Weixin.Public.Common;
 using Td.Weixin.Public.Message;
 
 namespace Td.Weixin.Public.Plugin

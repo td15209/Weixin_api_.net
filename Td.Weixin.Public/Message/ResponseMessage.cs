@@ -1,11 +1,4 @@
-﻿/*******************************
- *	Author:	Dong [mailto:techdong@hotmail.com] 欢迎交流 Q群：289147891
- *	Date:	2013-09-04 15:45:05
- *	Desc:	
- * 
-*******************************/
-
-using System;
+﻿using System;
 using System.Web;
 
 namespace Td.Weixin.Public.Message

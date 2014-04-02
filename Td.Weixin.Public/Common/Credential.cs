@@ -1,27 +1,26 @@
-﻿/*******************************
- *	Author:	Dong [mailto:techdong@hotmail.com] 欢迎交流 Q群：289147891
- *	Date:	2013-09-04 22:34:32
- *	Desc:	
- * 
-*******************************/
-
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Threading;
 using System.Web.Configuration;
 
 namespace Td.Weixin.Public.Common
 {
+    /// <summary>
+    /// 凭据处理
+    /// </summary>
     public class Credential
     {
+        /// <summary>
+        ///     获取access_token的接口地址
+        /// </summary>
         public const string Url = "https://api.weixin.qq.com/cgi-bin/token";
+
         private static string _accessToken;
 
         /// <summary>
         ///     多access_token缓存（根据appid），满足一个服务器服务于多个微信公号的需求。
         /// </summary>
-        private static readonly Dictionary<string, string> MultiTokenCache = new Dictionary<string, string>();
+        private static readonly Dictionary<string, CredentialCache> MultiTokenCache =
+            new Dictionary<string, CredentialCache>();
 
         /// <summary>
         ///     获取缓存的（最后一次获取的）AccessToken。
@@ -52,12 +51,16 @@ namespace Td.Weixin.Public.Common
 
         /// <summary>
         ///     获取access_token。会缓存，过期后自动重新获取新的token。
+        ///     <para>
+        ///         <exception cref="WxException">获取access_token失败时抛出</exception>
+        ///     </para>
         /// </summary>
         public string AccessToken
         {
             get
             {
-                if (!MultiTokenCache.ContainsKey(Appid) || string.IsNullOrEmpty(MultiTokenCache[Appid]))
+                if (!MultiTokenCache.ContainsKey(Appid) || MultiTokenCache[Appid] == null
+                    || MultiTokenCache[Appid].ExpireTime < DateTime.Now /*已过期*/)
                 {
                     var helper = GetHelper();
                     var ret = helper.Get<CredentialResult>(new FormData
@@ -67,23 +70,20 @@ namespace Td.Weixin.Public.Common
                         {"secret", Secret},
                     });
 
-                    _accessToken = ret.access_token;
-                    MultiTokenCache[Appid] = _accessToken; //缓存
+                    //获取access_token失败
+                    if (!ret.IsSuccess)
+                        throw new WxException(ret.errcode, ret.errmsg);
 
-                    if (ret.IsSuccess)
+                    _accessToken = ret.access_token;
+
+                    MultiTokenCache[Appid] = new CredentialCache
                     {
-                        var autoEvent = new AutoResetEvent(false);
-                        var curAppid = Appid;
-                        var timer = new Timer(state =>
-                        {
-                            MultiTokenCache.Remove(curAppid);
-                            autoEvent.Set();
-                        }, autoEvent, (ret.expires_in - 3) /*避免时间误差*/*1000, Timeout.Infinite);
-                        timer.Dispose(autoEvent);
-                    }
+                        AccessToken = ret.access_token,
+                        ExpireTime = DateTime.Now.AddSeconds(ret.expires_in - 3 /*避免时间误差*/)
+                    }; //缓存
                 }
 
-                _accessToken = MultiTokenCache[Appid]; //2013-11-28 修复bug：Appid变化后，仍然获取上个成功的access_token
+                _accessToken = MultiTokenCache[Appid].AccessToken; //2013-11-28 修复bug：Appid变化后，仍然获取上个成功的access_token
 
                 return _accessToken;
             }
@@ -110,17 +110,25 @@ namespace Td.Weixin.Public.Common
         /// <returns></returns>
         public static Credential Create()
         {
-            var ret = new Credential();
-            ret.Appid = WebConfigurationManager.AppSettings["WeixinAppId"];
-            ret.Secret = WebConfigurationManager.AppSettings["WeixinSecret"];
+            var ret = new Credential
+            {
+                Appid = WebConfigurationManager.AppSettings["WeixinAppId"],
+                Secret = WebConfigurationManager.AppSettings["WeixinSecret"]
+            };
             return ret;
+        }
+
+        private class CredentialCache
+        {
+            public string AccessToken { get; set; }
+            public DateTime ExpireTime { get; set; }
         }
     }
 
     /// <summary>
     ///     获取凭证时的响应数据
     /// </summary>
-    public class CredentialResult
+    internal class CredentialResult
     {
         /// <summary>
         ///     获取到的凭证

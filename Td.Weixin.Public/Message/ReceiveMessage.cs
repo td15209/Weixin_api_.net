@@ -1,18 +1,6 @@
-﻿/*******************************
- *	Author:	Dong [mailto:techdong@hotmail.com] 欢迎交流 Q群：289147891
- *	Date:	2013-09-04 14:36:48
- *	Desc:	
- * 
-*******************************/
-
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Dynamic;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Security.Cryptography;
 using System.Web;
 using System.Xml.Linq;
 

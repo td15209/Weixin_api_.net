@@ -1,18 +1,7 @@
-﻿/*******************************
- *	Author:	Dong [mailto:techdong@hotmail.com] 欢迎交流 Q群：289147891
- *	Date:	2013-09-04 13:29:33
- *	Desc:	
- * 
-*******************************/
-
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Xml;
 using System.Xml.Linq;
-
 
 namespace Td.Weixin.Public.Message
 {

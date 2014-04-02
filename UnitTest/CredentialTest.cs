@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Td.Weixin.Public.Common;
 
@@ -21,11 +22,16 @@ namespace UnitTest
                  Secret = "your secret"
              };*/
 
-            var s = c.AccessToken;
+            for (var i = 0; i < 100; i++)
+            {
+                var beginTime = DateTime.Now.Ticks;
+                var s = c.AccessToken;
 
-            Debug.WriteLine(s);
+                Debug.WriteLine("{0}，耗时{1}秒", s, (DateTime.Now.Ticks - beginTime) / 10000 / 1000);
 
-            Assert.IsNotNull(s);
+                Assert.IsNotNull(s);
+            }
+
         }
 
         /*Modified:多token缓存测试	By Dong[mailto:techdong@hotmail.com] 2013-09-06 13:02:14*/

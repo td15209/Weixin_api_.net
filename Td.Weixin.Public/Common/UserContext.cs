@@ -1,13 +1,4 @@
-﻿/*******************************
- *	Author:	Dong [mailto:techdong@hotmail.com] 欢迎交流 Q群：289147891
- *	Date:	2013-09-05 22:18:33
- *	Desc:	
- * 
-*******************************/
-
-using System;
-using System.Collections.Generic;
-using System.Threading;
+﻿using System;
 using System.Web;
 using System.Web.Caching;
 using Td.Weixin.Public.Message;

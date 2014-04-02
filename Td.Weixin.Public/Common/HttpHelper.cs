@@ -1,19 +1,9 @@
-﻿/*******************************
- *	Author:	Dong [mailto:techdong@hotmail.com] 欢迎交流 Q群：289147891
- *	Date:	2013-09-04 22:34:50
- *	Desc:	
- * 
-*******************************/
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Security.Policy;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Web;
 using Newtonsoft.Json;
 
 namespace Td.Weixin.Public.Common

@@ -1,11 +1,4 @@
-﻿/*******************************
- *	Author:	Dong[http://blog.tecd.pw] [mailto:techdong@hotmail.com] 欢迎交流 Q群：289147891
- *	Date:	$date$
- *	Desc:	
- * 
-*******************************/
-
-using System;
+﻿using System;
 
 namespace Td.Weixin.Public.Common
 {

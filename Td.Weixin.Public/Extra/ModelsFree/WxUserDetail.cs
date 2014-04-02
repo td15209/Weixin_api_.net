@@ -1,13 +1,4 @@
-﻿/*******************************
- *	Author:	Dong[http://blog.tecd.pw] [mailto:techdong@hotmail.com] 欢迎交流 Q群：289147891
- *	Date:	2013-09-15 16:35:33
- *	Desc:	
- *	
- * 
-*******************************/
-/*Modified:desc	By Dong[http://blog.tecd.pw] [mailto:techdong@hotmail.com] 2014-03-03 16:40:09*/
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace Td.Weixin.Public.Extra.ModelsFree

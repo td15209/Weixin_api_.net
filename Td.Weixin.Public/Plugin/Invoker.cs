@@ -1,11 +1,4 @@
-﻿/*******************************
- *	Author:	Dong[http://blog.tecd.pw] [mailto:techdong@hotmail.com] 欢迎交流 Q群：289147891
- *	Date:	2013-09-13 21:10:36
- *	Desc:	
- * 
-*******************************/
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Td.Weixin.Public.Common;
@@ -14,43 +7,44 @@ using Td.Weixin.Public.Message;
 namespace Td.Weixin.Public.Plugin
 {
     /// <summary>
-    ///调用者，控制插件的执行。
+    ///     调用者，控制插件的执行。
     /// </summary>
     public class Invoker
     {
-        public delegate void InvokingHandler(PluginInvokingContext cex);
         public delegate void InvokedHandler(PluginContext cex, ResponseMessage repMessage);
 
+        public delegate void InvokingHandler(PluginInvokingContext cex);
+
         /// <summary>
-        /// Invoke执行前触发。
-        /// 可用于判断商家请求数等是否已达上限等。
+        ///     Invoke执行前触发。
+        ///     可用于判断商家请求数等是否已达上限等。
         /// </summary>
         public static InvokingHandler Invoking;
 
         /// <summary>
-        ///Invoke 完成后触发 。
-        ///可用于记录 收到的消息、商家信息、用户信息及给予的响应信息 等。
+        ///     Invoke 完成后触发 。
+        ///     可用于记录 收到的消息、商家信息、用户信息及给予的响应信息 等。
         /// </summary>
         public static InvokedHandler Invoked;
 
         private static readonly List<Plugin> Plugins = new List<Plugin>();
 
         /// <summary>
-        ///是否验证签名信息。
-        ///如果为true，签名失败时当不会执行插件.
+        ///     是否验证签名信息。
+        ///     如果为true，签名失败时当不会执行插件.
         /// </summary>
         public static bool RequireCheck = true;
 
         /// <summary>
-        ///商家信息获取者。用于根据商家微信公号的openid获取商家信息。
-        ///如果平台有多个微信公号，必须实现此抽象类，否则不能获取到商家信息。
+        ///     商家信息获取者。用于根据商家微信公号的openid获取商家信息。
+        ///     如果平台有多个微信公号，必须实现此抽象类，否则不能获取到商家信息。
         /// </summary>
         public static SellerObtainer Obtainer { get; set; }
 
         /// <summary>
-        ///注册插件。
-        ///<para>注册的插件则按顺序执行，直到找到第一个接受调用的Plugin。这意味着顺序很重要。</para>
-        ///<para>同时，最后一个插件应该能处理所有调用，否则本次执行将无任何结果。</para>
+        ///     注册插件。
+        ///     <para>注册的插件则按顺序执行，直到找到第一个接受调用的Plugin。这意味着顺序很重要。</para>
+        ///     <para>同时，最后一个插件应该能处理所有调用，否则本次执行将无任何结果。</para>
         /// </summary>
         /// <param name="plugin"></param>
         /// <param name="index"></param>
@@ -70,8 +64,8 @@ namespace Td.Weixin.Public.Plugin
         }
 
         /// <summary>
-        ///将调用转到合适的插件并由找到的插件执行处理。
-        ///<para>如果没有任何插件接收此次调用，将返回null。</para>
+        ///     将调用转到合适的插件并由找到的插件执行处理。
+        ///     <para>如果没有任何插件接收此次调用，将返回null。</para>
         /// </summary>
         /// <param name="context">如果为null，则自动从请求中获取数据</param>
         /// <returns></returns>
