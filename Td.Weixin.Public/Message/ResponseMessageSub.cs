@@ -1,4 +1,6 @@
-﻿namespace Td.Weixin.Public.Message
+﻿using System.CodeDom;
+
+namespace Td.Weixin.Public.Message
 {
     /// <summary>
     ///     （响应）文件消息
@@ -30,6 +32,17 @@
         public RepNewsMessage()
         {
             MsgType = MessageType.News;
+        }
+    }
+
+    /// <summary>
+    /// （响应）客服消息
+    /// </summary>
+    public class TranserCustomerService : ResponseMessage
+    {
+        public TranserCustomerService()
+        {
+            MsgType = MessageType.TransferCustomerSerivce;
         }
     }
 }
