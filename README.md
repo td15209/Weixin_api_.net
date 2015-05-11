@@ -3,6 +3,8 @@ Weinxin_api_.net
 
 .Net访问微信公共平台接口 【内容博客持续更新。博客：http://blog.tecd.pw/?cat=14】
 
+查看更多演示案例浏览 http://WWW.SHHOT.NET
+
 ### 前言：
 如有兴趣或疑问，请留言或入群交流，非常欢迎交流。 QQ群：289147891
 
